@@ -5,6 +5,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { HeroUIProvider } from "@heroui/react";
+import {ToastProvider} from "@heroui/toast";
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Hyperbeast';
 
@@ -20,6 +22,7 @@ createInertiaApp({
 
         root.render(
             <HeroUIProvider>
+                <ToastProvider />
                 <App {...props} />
             </HeroUIProvider>
         );

@@ -26,6 +26,7 @@ import {
   Select,
   SelectItem,
   useDisclosure,
+  addToast,
 } from "@heroui/react";
 import { FileImage, UserPlus, PlusIcon, ToggleLeft, Lock } from "lucide-react";
 import { useForm } from "@inertiajs/react";
@@ -81,8 +82,7 @@ export const columns = [
 
 export const statusOptions = [
   { name: "Active", uid: "active" },
-  { name: "Paused", uid: "paused" },
-  { name: "Vacation", uid: "vacation" },
+  { name: "Inactive", uid: "inactive" },
 ];
 
 const statusColorMap = {
@@ -301,9 +301,19 @@ function Users({ user, users }) {
       onSuccess: () => {
         onOpenChange(false); // Cerrar modal
         form.reset();
+        addToast({
+          title: "Usuario creado correctamente",
+          description: "El usuario ha sido creado exitosamente",
+          color: "success",
+        });
       },
       onError: () => {
         console.log("Errores del servidor:", form.errors);
+        addToast({
+          title: "Hubo un problema para crear el usuario",
+          description: "El usuario no se ha podido crear, por favor verifica los datos",
+          color: "danger",
+        });
       }
     });
   };
@@ -356,7 +366,6 @@ function Users({ user, users }) {
     const handleToggleStatus = () => {
       const newStatus =
         user.status === "active" ? "paused" :
-          user.status === "paused" ? "vacation" : "active";
 
       // Aquí podrías llamar a una función de actualización con el nuevo estado
       console.log(`Toggle status for ${user.name} to ${newStatus}`)
@@ -701,7 +710,7 @@ function Users({ user, users }) {
                       form.setData('role', Array.from(keys)[0])
                     }
                   >
-                    <SelectItem key="admin">Administrador</SelectItem>
+                    <SelectItem key="administrator">Administrador</SelectItem>
                     <SelectItem key="reader">Lector</SelectItem>
                     <SelectItem key="creator">Creador</SelectItem>
                   </Select>
