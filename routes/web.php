@@ -46,7 +46,8 @@ Route::prefix('dashboard')->group(function () {
     // Grupo para usuarios dentro de /dashboard
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('dashboard.users.index');
-        Route::post('/', [UserController::class, 'store'])->name('dashboard.users.store'); // ✅ POST /dashboard/users
+        Route::post('/', [UserController::class, 'store'])->name('dashboard.users.store');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('dashboard.users.destroy');
     });
 });
     

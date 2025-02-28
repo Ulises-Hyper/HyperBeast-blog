@@ -96,6 +96,12 @@ class UserController extends Controller
         }
     }
 
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->back()->with('message', 'Usuario eliminado correctamente');    }
+
     public function toggleStatus($id)
     {
         $user = User::findOrFail($id);

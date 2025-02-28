@@ -29,7 +29,7 @@ import {
   addToast,
 } from "@heroui/react";
 import { FileImage, UserPlus, PlusIcon, ToggleLeft, Lock } from "lucide-react";
-import { useForm } from "@inertiajs/react";
+import { useForm, router } from "@inertiajs/react";
 
 // Iconos (mantenemos los originales y añadimos los nuevos necesarios)
 export const MailIcon = (props) => (
@@ -318,6 +318,23 @@ function Users({ user, users }) {
     });
   };
 
+  const handleDelete = (userId) => {
+    if (!window.confirm("¿Seguro que quieres eliminar este usuario?")) return;
+
+    router.delete(`/dashboard/users/${userId}`, {
+      onSuccess: () => addToast({
+        title: "Usuario eliminado correctamente",
+        description: "El usuario ha sido eliminado exitosamente",
+        color: "success",
+      }),
+      onError: () => addToast({
+        title: "Hubo un problema para eliminar el usuario",
+        description: "El usuario no se ha podido eliminar, por favor intenta de nuevo",
+        color: "danger",
+      }),
+    });
+  };
+
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = React.useMemo(() => {
@@ -367,8 +384,8 @@ function Users({ user, users }) {
       const newStatus =
         user.status === "active" ? "paused" :
 
-      // Aquí podrías llamar a una función de actualización con el nuevo estado
-      console.log(`Toggle status for ${user.name} to ${newStatus}`)
+          // Aquí podrías llamar a una función de actualización con el nuevo estado
+          console.log(`Toggle status for ${user.name} to ${newStatus}`)
     }
 
     switch (columnKey) {
@@ -391,7 +408,8 @@ function Users({ user, users }) {
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Eliminar usuario">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50"
+                onClick={() => handleDelete(user.id)}>
                 <DeleteIcon />
               </span>
             </Tooltip>
