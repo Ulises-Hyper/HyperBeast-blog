@@ -96,6 +96,12 @@ class UserController extends Controller
         }
     }
 
+    public function edit(User $user){
+        return Inertia::render('Dashboard/Edit', [
+            'user' => $user,
+        ]);
+    }
+
     public function destroy($id){
         $user = User::findOrFail($id);
         $user->delete();

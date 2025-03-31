@@ -1,5 +1,6 @@
 import React from "react";
 import DashboardLayout from "../../Layouts/DashboardLayout";
+import { Link } from "@inertiajs/react";
 import {
   Table,
   TableHeader,
@@ -403,9 +404,9 @@ function Users({ user, users }) {
         return (
           <div className="relative flex items-center justify-center gap-2">
             <Tooltip content="Editar usuario">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <Link href={route("dashboard.users.edit", user.id)} className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EditIcon />
-              </span>
+              </Link>
             </Tooltip>
             <Tooltip color="danger" content="Eliminar usuario">
               <span className="text-lg text-danger cursor-pointer active:opacity-50"

@@ -1,0 +1,240 @@
+Date : 2025-03-29 19:51:16
+Directory : c:\laragon\www\hyperbeast
+Total : 155 files,  16901 codes, 1071 comments, 1196 blanks, all 19168 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          3 |      9,400 |          0 |          3 |      9,403 |
+| JavaScript         |         78 |      5,358 |        217 |        542 |      6,117 |
+| PHP                |         70 |      2,052 |        854 |        626 |      3,532 |
+| Markdown           |          1 |         46 |          0 |         22 |         68 |
+| XML                |          1 |         32 |          0 |          1 |         33 |
+| JSON with Comments |          1 |         10 |          0 |          1 |         11 |
+| CSS                |          1 |          3 |          0 |          1 |          4 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                            | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                               |        155 |     16,901 |      1,071 |      1,196 |     19,168 |
+| . (Files)                                                                                                       |          9 |      9,530 |          1 |         34 |      9,565 |
+| app                                                                                                             |         22 |        614 |        158 |        180 |        952 |
+| app\Http                                                                                                        |         17 |        514 |        121 |        143 |        778 |
+| app\Http\Controllers                                                                                            |         14 |        420 |         82 |        119 |        621 |
+| app\Http\Controllers (Files)                                                                                    |          5 |        169 |         21 |         52 |        242 |
+| app\Http\Controllers\Auth                                                                                       |          9 |        251 |         61 |         67 |        379 |
+| app\Http\Middleware                                                                                             |          1 |         21 |         13 |          6 |         40 |
+| app\Http\Requests                                                                                               |          2 |         73 |         26 |         18 |        117 |
+| app\Http\Requests (Files)                                                                                       |          1 |         22 |          5 |          4 |         31 |
+| app\Http\Requests\Auth                                                                                          |          1 |         51 |         21 |         14 |         86 |
+| app\Mail                                                                                                        |          1 |         18 |         12 |          8 |         38 |
+| app\Models                                                                                                      |          3 |         68 |         18 |         24 |        110 |
+| app\Providers                                                                                                   |          1 |         14 |          7 |          5 |         26 |
+| bootstrap                                                                                                       |          2 |         22 |          2 |          6 |         30 |
+| config                                                                                                          |         10 |        480 |        556 |        191 |      1,227 |
+| database                                                                                                        |         18 |        427 |        102 |         86 |        615 |
+| database\factories                                                                                              |          1 |         25 |         14 |          6 |         45 |
+| database\migrations                                                                                             |         14 |        344 |         81 |         65 |        490 |
+| database\seeders                                                                                                |          3 |         58 |          7 |         15 |         80 |
+| public                                                                                                          |          1 |          9 |          3 |          6 |         18 |
+| resources                                                                                                       |         79 |      5,463 |        216 |        548 |      6,227 |
+| resources\css                                                                                                   |          1 |          3 |          0 |          1 |          4 |
+| resources\js                                                                                                    |         75 |      5,316 |        216 |        535 |      6,067 |
+| resources\js (Files)                                                                                            |          2 |         31 |          0 |          8 |         39 |
+| resources\js\Components                                                                                         |         46 |      2,719 |        208 |        229 |      3,156 |
+| resources\js\Components (Files)                                                                                 |         12 |        333 |          0 |         38 |        371 |
+| resources\js\Components\about                                                                                   |          2 |         68 |          0 |          5 |         73 |
+| resources\js\Components\article                                                                                 |         11 |        302 |        206 |         40 |        548 |
+| resources\js\Components\article (Files)                                                                         |          7 |        193 |          0 |         13 |        206 |
+| resources\js\Components\article\comments                                                                        |          4 |        109 |        206 |         27 |        342 |
+| resources\js\Components\articles                                                                                |          3 |        364 |          0 |         15 |        379 |
+| resources\js\Components\common                                                                                  |          5 |        354 |          0 |         28 |        382 |
+| resources\js\Components\dashboard                                                                               |          3 |        470 |          1 |         33 |        504 |
+| resources\js\Components\feedback                                                                                |          2 |         92 |          0 |          8 |        100 |
+| resources\js\Components\profile                                                                                 |          3 |        458 |          0 |         31 |        489 |
+| resources\js\Components\sections                                                                                |          5 |        278 |          1 |         31 |        310 |
+| resources\js\Layouts                                                                                            |          3 |        208 |          0 |         23 |        231 |
+| resources\js\Pages                                                                                              |         24 |      2,358 |          8 |        275 |      2,641 |
+| resources\js\Pages (Files)                                                                                      |         11 |        536 |          5 |         59 |        600 |
+| resources\js\Pages\Auth                                                                                         |          7 |        585 |          0 |         94 |        679 |
+| resources\js\Pages\Dashboard                                                                                    |          2 |        878 |          3 |         63 |        944 |
+| resources\js\Pages\Profile                                                                                      |          4 |        359 |          0 |         59 |        418 |
+| resources\js\Pages\Profile (Files)                                                                              |          1 |         35 |          0 |          5 |         40 |
+| resources\js\Pages\Profile\Partials                                                                             |          3 |        324 |          0 |         54 |        378 |
+| resources\views                                                                                                 |          3 |        144 |          0 |         12 |        156 |
+| resources\views (Files)                                                                                         |          1 |         21 |          0 |          6 |         27 |
+| resources\views\emails                                                                                          |          1 |         92 |          0 |          5 |         97 |
+| resources\views\errors                                                                                          |          1 |         31 |          0 |          1 |         32 |
+| routes                                                                                                          |          3 |         95 |          1 |         35 |        131 |
+| tests                                                                                                           |         11 |        261 |         32 |        110 |        403 |
+| tests (Files)                                                                                                   |          2 |         16 |         32 |         11 |         59 |
+| tests\Feature                                                                                                   |          8 |        241 |          0 |         97 |        338 |
+| tests\Feature (Files)                                                                                           |          2 |         69 |          0 |         25 |         94 |
+| tests\Feature\Auth                                                                                              |          6 |        172 |          0 |         72 |        244 |
+| tests\Unit                                                                                                      |          1 |          4 |          0 |          2 |          6 |
++-----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                        | language           | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\laragon\www\hyperbeast\README.md                                                                             | Markdown           |         46 |          0 |         22 |         68 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\AuthenticatedSessionController.php                          | PHP                |         33 |          9 |         11 |         53 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\ConfirmablePasswordController.php                           | PHP                |         29 |          6 |          7 |         42 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\EmailVerificationNotificationController.php                 | PHP                |         16 |          3 |          6 |         25 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\EmailVerificationPromptController.php                       | PHP                |         16 |          3 |          4 |         23 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\NewPasswordController.php                                   | PHP                |         47 |         14 |          9 |         70 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\PasswordController.php                                      | PHP                |         21 |          3 |          6 |         30 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\PasswordResetLinkController.php                             | PHP                |         33 |         11 |          8 |         52 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\RegisteredUserController.php                                | PHP                |         37 |          9 |         10 |         56 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Auth\VerifyEmailController.php                                   | PHP                |         19 |          3 |          6 |         28 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\Controller.php                                                   | PHP                |          8 |          0 |          4 |         12 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\DashboardController.php                                          | PHP                |         10 |          0 |          3 |         13 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\NewsletterController.php                                         | PHP                |         19 |          2 |          8 |         29 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\ProfileController.php                                            | PHP                |         41 |          9 |         14 |         64 |
+| c:\laragon\www\hyperbeast\app\Http\Controllers\UserController.php                                               | PHP                |         91 |         10 |         23 |        124 |
+| c:\laragon\www\hyperbeast\app\Http\Middleware\HandleInertiaRequests.php                                         | PHP                |         21 |         13 |          6 |         40 |
+| c:\laragon\www\hyperbeast\app\Http\Requests\Auth\LoginRequest.php                                               | PHP                |         51 |         21 |         14 |         86 |
+| c:\laragon\www\hyperbeast\app\Http\Requests\ProfileUpdateRequest.php                                            | PHP                |         22 |          5 |          4 |         31 |
+| c:\laragon\www\hyperbeast\app\Mail\NewsletterConfirmation.php                                                   | PHP                |         18 |         12 |          8 |         38 |
+| c:\laragon\www\hyperbeast\app\Models\Newsletter.php                                                             | PHP                |         10 |          0 |          5 |         15 |
+| c:\laragon\www\hyperbeast\app\Models\Role.php                                                                   | PHP                |          9 |          0 |          4 |         13 |
+| c:\laragon\www\hyperbeast\app\Models\User.php                                                                   | PHP                |         49 |         18 |         15 |         82 |
+| c:\laragon\www\hyperbeast\app\Providers\AppServiceProvider.php                                                  | PHP                |         14 |          7 |          5 |         26 |
+| c:\laragon\www\hyperbeast\bootstrap\app.php                                                                     | PHP                |         18 |          2 |          4 |         24 |
+| c:\laragon\www\hyperbeast\bootstrap\providers.php                                                               | PHP                |          4 |          0 |          2 |          6 |
+| c:\laragon\www\hyperbeast\composer.json                                                                         | JSON               |         76 |          0 |          1 |         77 |
+| c:\laragon\www\hyperbeast\composer.lock                                                                         | JSON               |      9,295 |          0 |          1 |      9,296 |
+| c:\laragon\www\hyperbeast\config\app.php                                                                        | PHP                |         22 |         82 |         23 |        127 |
+| c:\laragon\www\hyperbeast\config\auth.php                                                                       | PHP                |         28 |         74 |         14 |        116 |
+| c:\laragon\www\hyperbeast\config\cache.php                                                                      | PHP                |         57 |         34 |         18 |        109 |
+| c:\laragon\www\hyperbeast\config\database.php                                                                   | PHP                |        108 |         43 |         23 |        174 |
+| c:\laragon\www\hyperbeast\config\filesystems.php                                                                | PHP                |         36 |         32 |         13 |         81 |
+| c:\laragon\www\hyperbeast\config\logging.php                                                                    | PHP                |         79 |         33 |         21 |        133 |
+| c:\laragon\www\hyperbeast\config\mail.php                                                                       | PHP                |         55 |         43 |         19 |        117 |
+| c:\laragon\www\hyperbeast\config\queue.php                                                                      | PHP                |         52 |         44 |         17 |        113 |
+| c:\laragon\www\hyperbeast\config\services.php                                                                   | PHP                |         20 |         11 |          8 |         39 |
+| c:\laragon\www\hyperbeast\config\session.php                                                                    | PHP                |         23 |        160 |         35 |        218 |
+| c:\laragon\www\hyperbeast\database\factories\UserFactory.php                                                    | PHP                |         25 |         14 |          6 |         45 |
+| c:\laragon\www\hyperbeast\database\migrations\0001_01_01_000000_create_users_table.php                          | PHP                |         39 |          6 |          6 |         51 |
+| c:\laragon\www\hyperbeast\database\migrations\0001_01_01_000001_create_cache_table.php                          | PHP                |         25 |          6 |          5 |         36 |
+| c:\laragon\www\hyperbeast\database\migrations\0001_01_01_000002_create_jobs_table.php                           | PHP                |         46 |          6 |          6 |         58 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_001811_create_comments_table.php                       | PHP                |         21 |          6 |          4 |         31 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_002320_create_entries_table.php                        | PHP                |         21 |          6 |          4 |         31 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_004123_create_likes_table.php                          | PHP                |         20 |          6 |          4 |         30 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_004144_create_views_table.php                          | PHP                |         20 |          6 |          5 |         31 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_004250_create_role_table.php                           | PHP                |         19 |          6 |          5 |         30 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_004415_create_subscriptions_table.php                  | PHP                |         21 |          6 |          4 |         31 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_120534_create_newsletters_table.php                    | PHP                |         22 |          6 |          4 |         32 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_27_233027_add_default_value_to_role_id_in_users_table.php | PHP                |         19 |          6 |          4 |         29 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_01_28_235233_rename_old_table_to_new_table.php               | PHP                |         15 |          6 |          4 |         25 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_02_02_193344_add_avatar_and_status_to_users_table.php        | PHP                |         22 |          3 |          4 |         29 |
+| c:\laragon\www\hyperbeast\database\migrations\2025_02_02_213810_add_username_to_users_table.php                 | PHP                |         34 |          6 |          6 |         46 |
+| c:\laragon\www\hyperbeast\database\seeders\DatabaseSeeder.php                                                   | PHP                |         22 |          5 |          6 |         33 |
+| c:\laragon\www\hyperbeast\database\seeders\RoleSeeder.php                                                       | PHP                |         16 |          2 |          5 |         23 |
+| c:\laragon\www\hyperbeast\database\seeders\UserSeeder.php                                                       | PHP                |         20 |          0 |          4 |         24 |
+| c:\laragon\www\hyperbeast\jsconfig.json                                                                         | JSON with Comments |         10 |          0 |          1 |         11 |
+| c:\laragon\www\hyperbeast\package.json                                                                          | JSON               |         29 |          0 |          1 |         30 |
+| c:\laragon\www\hyperbeast\phpunit.xml                                                                           | XML                |         32 |          0 |          1 |         33 |
+| c:\laragon\www\hyperbeast\postcss.config.js                                                                     | JavaScript         |          6 |          0 |          1 |          7 |
+| c:\laragon\www\hyperbeast\public\index.php                                                                      | PHP                |          9 |          3 |          6 |         18 |
+| c:\laragon\www\hyperbeast\resources\css\app.css                                                                 | CSS                |          3 |          0 |          1 |          4 |
+| c:\laragon\www\hyperbeast\resources\js\Components\ApplicationLogo.jsx                                           | JavaScript         |         11 |          0 |          1 |         12 |
+| c:\laragon\www\hyperbeast\resources\js\Components\Checkbox.jsx                                                  | JavaScript         |         12 |          0 |          1 |         13 |
+| c:\laragon\www\hyperbeast\resources\js\Components\DangerButton.jsx                                              | JavaScript         |         20 |          0 |          1 |         21 |
+| c:\laragon\www\hyperbeast\resources\js\Components\Dropdown.jsx                                                  | JavaScript         |         91 |          0 |         17 |        108 |
+| c:\laragon\www\hyperbeast\resources\js\Components\InputError.jsx                                                | JavaScript         |         10 |          0 |          1 |         11 |
+| c:\laragon\www\hyperbeast\resources\js\Components\InputLabel.jsx                                                | JavaScript         |         18 |          0 |          1 |         19 |
+| c:\laragon\www\hyperbeast\resources\js\Components\Modal.jsx                                                     | JavaScript         |         61 |          0 |          5 |         66 |
+| c:\laragon\www\hyperbeast\resources\js\Components\NavLink.jsx                                                   | JavaScript         |         22 |          0 |          2 |         24 |
+| c:\laragon\www\hyperbeast\resources\js\Components\PrimaryButton.jsx                                             | JavaScript         |         20 |          0 |          1 |         21 |
+| c:\laragon\www\hyperbeast\resources\js\Components\ResponsiveNavLink.jsx                                         | JavaScript         |         20 |          0 |          2 |         22 |
+| c:\laragon\www\hyperbeast\resources\js\Components\SecondaryButton.jsx                                           | JavaScript         |         22 |          0 |          1 |         23 |
+| c:\laragon\www\hyperbeast\resources\js\Components\TextInput.jsx                                                 | JavaScript         |         26 |          0 |          5 |         31 |
+| c:\laragon\www\hyperbeast\resources\js\Components\about\AboutHero.jsx                                           | JavaScript         |         14 |          0 |          2 |         16 |
+| c:\laragon\www\hyperbeast\resources\js\Components\about\AboutMe.jsx                                             | JavaScript         |         54 |          0 |          3 |         57 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\ArticleContent.jsx                                    | JavaScript         |         52 |          0 |          2 |         54 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\ArticleHeader.jsx                                     | JavaScript         |         24 |          0 |          2 |         26 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\ArticleHero.jsx                                       | JavaScript         |         20 |          0 |          2 |         22 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\ArticleMetrics.jsx                                    | JavaScript         |          0 |          0 |          1 |          1 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\AuthorBio.jsx                                         | JavaScript         |         33 |          0 |          2 |         35 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\FloatingActionButtons.jsx                             | JavaScript         |         24 |          0 |          2 |         26 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\RelatedArticleCard.jsx                                | JavaScript         |         40 |          0 |          2 |         42 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\comments\CommentForm.jsx                              | JavaScript         |         23 |          0 |          2 |         25 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\comments\CommentItem.jsx                              | JavaScript         |         86 |          0 |          7 |         93 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\comments\CommentList.jsx                              | JavaScript         |          0 |        206 |         17 |        223 |
+| c:\laragon\www\hyperbeast\resources\js\Components\article\comments\CommentSection.jsx                           | JavaScript         |          0 |          0 |          1 |          1 |
+| c:\laragon\www\hyperbeast\resources\js\Components\articles\ArticlesCards.jsx                                    | JavaScript         |        103 |          0 |          6 |        109 |
+| c:\laragon\www\hyperbeast\resources\js\Components\articles\ArticlesList.jsx                                     | JavaScript         |        184 |          0 |          6 |        190 |
+| c:\laragon\www\hyperbeast\resources\js\Components\articles\RecentPosts.jsx                                      | JavaScript         |         77 |          0 |          3 |         80 |
+| c:\laragon\www\hyperbeast\resources\js\Components\common\Footer.jsx                                             | JavaScript         |         64 |          0 |          3 |         67 |
+| c:\laragon\www\hyperbeast\resources\js\Components\common\Navbar.jsx                                             | JavaScript         |        203 |          0 |         13 |        216 |
+| c:\laragon\www\hyperbeast\resources\js\Components\common\SearchBar.jsx                                          | JavaScript         |         33 |          0 |          4 |         37 |
+| c:\laragon\www\hyperbeast\resources\js\Components\common\Sidebar.jsx                                            | JavaScript         |         35 |          0 |          4 |         39 |
+| c:\laragon\www\hyperbeast\resources\js\Components\common\ToggleSwitch.jsx                                       | JavaScript         |         19 |          0 |          4 |         23 |
+| c:\laragon\www\hyperbeast\resources\js\Components\dashboard\DashboardHeader.jsx                                 | JavaScript         |        132 |          0 |         10 |        142 |
+| c:\laragon\www\hyperbeast\resources\js\Components\dashboard\DashboardMain.jsx                                   | JavaScript         |        277 |          0 |         16 |        293 |
+| c:\laragon\www\hyperbeast\resources\js\Components\dashboard\DashboardSideBar.jsx                                | JavaScript         |         61 |          1 |          7 |         69 |
+| c:\laragon\www\hyperbeast\resources\js\Components\feedback\FeedbackForm.jsx                                     | JavaScript         |         78 |          0 |          6 |         84 |
+| c:\laragon\www\hyperbeast\resources\js\Components\feedback\FeedbackHero.jsx                                     | JavaScript         |         14 |          0 |          2 |         16 |
+| c:\laragon\www\hyperbeast\resources\js\Components\profile\ProfileEditModal.jsx                                  | JavaScript         |        195 |          0 |         17 |        212 |
+| c:\laragon\www\hyperbeast\resources\js\Components\profile\ProfileHeader.jsx                                     | JavaScript         |         81 |          0 |          5 |         86 |
+| c:\laragon\www\hyperbeast\resources\js\Components\profile\ProfileMain.jsx                                       | JavaScript         |        182 |          0 |          9 |        191 |
+| c:\laragon\www\hyperbeast\resources\js\Components\sections\ArticleIndexSection.jsx                              | JavaScript         |         75 |          0 |          5 |         80 |
+| c:\laragon\www\hyperbeast\resources\js\Components\sections\ArticleInteractions.jsx                              | JavaScript         |         67 |          0 |         12 |         79 |
+| c:\laragon\www\hyperbeast\resources\js\Components\sections\Comments.jsx                                         | JavaScript         |         64 |          1 |          6 |         71 |
+| c:\laragon\www\hyperbeast\resources\js\Components\sections\HeroSection.jsx                                      | JavaScript         |         15 |          0 |          2 |         17 |
+| c:\laragon\www\hyperbeast\resources\js\Components\sections\Newsletter.jsx                                       | JavaScript         |         57 |          0 |          6 |         63 |
+| c:\laragon\www\hyperbeast\resources\js\Layouts\AuthenticatedLayout.jsx                                          | JavaScript         |        163 |          0 |         14 |        177 |
+| c:\laragon\www\hyperbeast\resources\js\Layouts\DashboardLayout.jsx                                              | JavaScript         |         29 |          0 |          6 |         35 |
+| c:\laragon\www\hyperbeast\resources\js\Layouts\GuestLayout.jsx                                                  | JavaScript         |         16 |          0 |          3 |         19 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\404.jsx                                                            | JavaScript         |         24 |          0 |          2 |         26 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\About.jsx                                                          | JavaScript         |         23 |          0 |          5 |         28 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Article.jsx                                                        | JavaScript         |         24 |          1 |          2 |         27 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Articles.jsx                                                       | JavaScript         |         16 |          0 |          3 |         19 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\ConfirmPassword.jsx                                           | JavaScript         |         46 |          0 |         10 |         56 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\ForgotPassword.jsx                                            | JavaScript         |         46 |          0 |         10 |         56 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\Login.jsx                                                     | JavaScript         |        116 |          0 |         13 |        129 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\Register.bak.jsx                                              | JavaScript         |        102 |          0 |         19 |        121 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\Register.jsx                                                  | JavaScript         |        153 |          0 |         18 |        171 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\ResetPassword.jsx                                             | JavaScript         |         80 |          0 |         15 |         95 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Auth\VerifyEmail.jsx                                               | JavaScript         |         42 |          0 |          9 |         51 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\CreatePost.jsx                                                     | JavaScript         |        272 |          4 |         19 |        295 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Dashboard.jsx                                                      | JavaScript         |         11 |          0 |          2 |         13 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Dashboard.old.jsx                                                  | JavaScript         |         24 |          0 |          3 |         27 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Dashboard\Edit.jsx                                                 | JavaScript         |        163 |          0 |         13 |        176 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Dashboard\Users.jsx                                                | JavaScript         |        715 |          3 |         50 |        768 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Faq.jsx                                                            | JavaScript         |         78 |          0 |          8 |         86 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Feedback.jsx                                                       | JavaScript         |         23 |          0 |          5 |         28 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Index.jsx                                                          | JavaScript         |         29 |          0 |          8 |         37 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Profile.jsx                                                        | JavaScript         |         12 |          0 |          2 |         14 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Profile\Edit.jsx                                                   | JavaScript         |         35 |          0 |          5 |         40 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Profile\Partials\DeleteUserForm.jsx                                | JavaScript         |        103 |          0 |         18 |        121 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Profile\Partials\UpdatePasswordForm.jsx                            | JavaScript         |        124 |          0 |         19 |        143 |
+| c:\laragon\www\hyperbeast\resources\js\Pages\Profile\Partials\UpdateProfileInformationForm.jsx                  | JavaScript         |         97 |          0 |         17 |        114 |
+| c:\laragon\www\hyperbeast\resources\js\app.jsx                                                                  | JavaScript         |         28 |          0 |          6 |         34 |
+| c:\laragon\www\hyperbeast\resources\js\bootstrap.js                                                             | JavaScript         |          3 |          0 |          2 |          5 |
+| c:\laragon\www\hyperbeast\resources\views\app.blade.php                                                         | PHP                |         21 |          0 |          6 |         27 |
+| c:\laragon\www\hyperbeast\resources\views\emails\newsletter_confirmation.blade.php                              | PHP                |         92 |          0 |          5 |         97 |
+| c:\laragon\www\hyperbeast\resources\views\errors\404.blade.php                                                  | PHP                |         31 |          0 |          1 |         32 |
+| c:\laragon\www\hyperbeast\routes\auth.php                                                                       | PHP                |         43 |          0 |         17 |         60 |
+| c:\laragon\www\hyperbeast\routes\console.php                                                                    | PHP                |          6 |          0 |          3 |          9 |
+| c:\laragon\www\hyperbeast\routes\web.php                                                                        | PHP                |         46 |          1 |         15 |         62 |
+| c:\laragon\www\hyperbeast\tailwind.config.js                                                                    | JavaScript         |         24 |          1 |          4 |         29 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\AuthenticationTest.php                                             | PHP                |         29 |          0 |         13 |         42 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\EmailVerificationTest.php                                          | PHP                |         33 |          0 |         14 |         47 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\PasswordConfirmationTest.php                                       | PHP                |         22 |          0 |         11 |         33 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\PasswordResetTest.php                                              | PHP                |         41 |          0 |         20 |         61 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\PasswordUpdateTest.php                                             | PHP                |         32 |          0 |          9 |         41 |
+| c:\laragon\www\hyperbeast\tests\Feature\Auth\RegistrationTest.php                                               | PHP                |         15 |          0 |          5 |         20 |
+| c:\laragon\www\hyperbeast\tests\Feature\ExampleTest.php                                                         | PHP                |          5 |          0 |          3 |          8 |
+| c:\laragon\www\hyperbeast\tests\Feature\ProfileTest.php                                                         | PHP                |         64 |          0 |         22 |         86 |
+| c:\laragon\www\hyperbeast\tests\Pest.php                                                                        | PHP                |         10 |         31 |          7 |         48 |
+| c:\laragon\www\hyperbeast\tests\TestCase.php                                                                    | PHP                |          6 |          1 |          4 |         11 |
+| c:\laragon\www\hyperbeast\tests\Unit\ExampleTest.php                                                            | PHP                |          4 |          0 |          2 |          6 |
+| c:\laragon\www\hyperbeast\vite.config.js                                                                        | JavaScript         |         12 |          0 |          2 |         14 |
+| Total                                                                                                           |                    |     16,901 |      1,071 |      1,196 |     19,168 |
++-----------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

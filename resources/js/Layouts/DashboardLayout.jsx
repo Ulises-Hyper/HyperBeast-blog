@@ -24,7 +24,7 @@ function DashboardLayout({ children, title, user }) {
           <DashboardHeader user={user ?? { avatar: <User/> }} />
         </div>
 
-        <main className="container mx-auto px-4 py-6">
+        <main className="container mx-auto">
           {children}
         </main>
       </div>
