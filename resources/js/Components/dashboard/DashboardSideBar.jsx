@@ -1,6 +1,5 @@
-import React from "react";
 import { Link, usePage } from "@inertiajs/react";
-import { LayoutDashboard, FileText, Tag, Users, MessageCircle, Menu } from "lucide-react";
+import { FileText, LayoutDashboard, Menu, MessageCircle, Tag, Users } from "lucide-react";
 
 function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
   const { url: currentPath } = usePage(); // Obtener la ruta actual
@@ -54,7 +53,13 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
                   : "hover:bg-gray-700 text-gray-400"
               }`}
             >
-              <span className="text-xl min-w-[32px] flex justify-center">{item.icon}</span>
+              <span
+                className={`text-xl flex justify-center items-center ${
+                  isCollapsed ? "w-full" : "min-w-[32px]"
+                }`}
+              >
+                {item.icon}
+              </span>
               <span className={`font-medium text-base ml-2 ${isCollapsed ? "hidden" : "block"}`}>
                 {item.label}
               </span>
