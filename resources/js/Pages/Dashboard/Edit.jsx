@@ -1,35 +1,90 @@
-import React from "react";
-import { Form, Input, Button, Select, SelectItem, Avatar, Switch } from "@heroui/react";
+import React, { useState, useEffect } from 'react';
+import { usePage, router } from '@inertiajs/react';
+import { Form, Input, Button, Select, SelectItem, Avatar, Switch, addToast } from "@heroui/react";
 import { User, Mail, Lock, Shield, X, Save } from "lucide-react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Inertia } from '@inertiajs/inertia';
+import { toast } from 'react-toastify';
 
-export default function App() {
-    const [formData, setFormData] = React.useState({
-        name: "",
-        email: "",
-        username: "",
-        password: "",
-        confirmPassword: "",
-        role: "admin",
-        status: "active",
-        avatar: null
-    });
+export default function Edit() {
+    const { user: initialUser, errors: serverErrors } = usePage().props;
+    const [userData, setUserData] = useState(initialUser);
+    const [avatarFile, setAvatarFile] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState({});
 
-    const handleSubmit = (e) => {
+    // Actualizar los datos cuando initialUser cambie
+    useEffect(() => {
+        setUserData(initialUser);
+    }, [initialUser]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
+        setIsSubmitting(true);
+        setErrors({});
+
+        const formData = new FormData();
+        formData.append('_method', 'PUT');
+        formData.append('name', userData.name);
+        formData.append('email', userData.email);
+        formData.append('username', userData.username);
+        formData.append('role', userData.role || '');
+        formData.append('status', userData.status);
+
+        if (userData.password) {
+            formData.append('password', userData.password);
+            formData.append('password_confirmation', userData.password_confirmation);
+        }
+
+        if (avatarFile) {
+            formData.append('avatar', avatarFile);
+        }
+
+        try {
+            await router.post(`/dashboard/users/${userData.id}`, formData, {
+                forceFormData: true,
+                preserveScroll: true,
+                onSuccess: () => {
+                    addToast({
+                        title: "Usuario actualizado correctamente",
+                        description: "El usuario ha sido actualizado exitosamente",
+                        color: "success",
+                    });
+                    // Limpiar campos de contraseña después de éxito
+                    setUserData(prev => ({ ...prev, password: '', password_confirmation: '' }));
+                },
+                onError: (errors) => {
+                    setErrors(errors);
+                    addToast({
+                        title: "Usuario no actualizado",
+                        description: "Hubo un error al actualizar el usuario",
+                        color: "danger",
+                    });
+                },
+                onFinish: () => setIsSubmitting(false)
+            });
+        } catch (error) {
+            toast.error('Error en la solicitud');
+            console.error('Error:', error);
+            setIsSubmitting(false);
+        }
     };
 
     const handleFileChange = (e) => {
         const file = e.target.files?.[0];
         if (file) {
-            setFormData({ ...formData, avatar: URL.createObjectURL(file) });
+            setAvatarFile(file);
         }
     };
 
-    const handleCancel = () => {
-        Inertia.visit(window.history.back());
+    const handleInputChange = (field, value) => {
+        setUserData(prev => ({ ...prev, [field]: value }));
+    };
+
+    const avatarPreview = () => {
+        if (avatarFile) {
+            return URL.createObjectURL(avatarFile);
+        }
+        return userData.avatar || "https://i.pravatar.cc/150";
     };
 
     return (
@@ -37,21 +92,22 @@ export default function App() {
             <div className="flex items-center justify-center">
                 <div className="bg-white rounded-xl shadow-sm p-8 w-full max-w-6xl">
                     <h1 className="text-2xl font-bold mb-8 text-gray-800">Editar Usuario</h1>
-                    <Form onSubmit={handleSubmit} className="items-end">
+                    <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-8">
                             {/* Columna Izquierda */}
                             <div className="space-y-6">
                                 <Input
                                     label="Nombre"
                                     placeholder="Ingrese su nombre"
-                                    value={formData.name}
-                                    onValueChange={(value) => setFormData({ ...formData, name: value })}
+                                    value={userData.name}
+                                    onValueChange={(value) => handleInputChange('name', value)}
+                                    errorMessage={errors.name}
                                     startContent={<User className="text-gray-400 w-5 h-5" />}
                                     style={{
                                         outline: "none",
                                         boxShadow: "none",
                                         border: "none",
-                                        padding: "0 6px 0 6px",
+                                        padding: "0 12px 0 12px",
                                     }}
                                 />
 
@@ -59,35 +115,38 @@ export default function App() {
                                     type="email"
                                     label="Email"
                                     placeholder="correo@ejemplo.com"
-                                    value={formData.email}
-                                    onValueChange={(value) => setFormData({ ...formData, email: value })}
+                                    value={userData.email}
+                                    onValueChange={(value) => handleInputChange('email', value)}
+                                    errorMessage={errors.email}
                                     startContent={<Mail className="text-gray-400 w-5 h-5" />}
                                     style={{
                                         outline: "none",
                                         boxShadow: "none",
                                         border: "none",
-                                        padding: "0 6px 0 6px",
+                                        padding: "0 12px 0 12px",
                                     }}
                                 />
 
                                 <Input
                                     label="Nombre de usuario"
                                     placeholder="Ingrese su usuario"
-                                    value={formData.username}
-                                    onValueChange={(value) => setFormData({ ...formData, username: value })}
+                                    value={userData.username}
+                                    onValueChange={(value) => handleInputChange('username', value)}
+                                    errorMessage={errors.username}
                                     startContent={<User className="text-gray-400 w-5 h-5" />}
                                     style={{
                                         outline: "none",
                                         boxShadow: "none",
                                         border: "none",
-                                        padding: "0 6px 0 6px",
+                                        padding: "0 12px 0 12px",
                                     }}
                                 />
+
                                 {/* Sección Avatar */}
                                 <div className="mt-8 pt-8 border-t border-gray-100">
                                     <div className="flex flex-col md:flex-row items-center gap-8">
                                         <Avatar
-                                            src={formData.avatar || "https://i.pravatar.cc/150"}
+                                            src={avatarPreview()}
                                             className="w-32 h-32"
                                             radius="lg"
                                         />
@@ -114,10 +173,13 @@ export default function App() {
                                                     </Button>
                                                 </label>
                                                 <span className="text-sm text-gray-500">
-                                                    {formData.avatar
-                                                        ? "Archivo seleccionado"
+                                                    {avatarFile
+                                                        ? avatarFile.name
                                                         : "Ningún archivo seleccionado"}
                                                 </span>
+                                                {errors.avatar && (
+                                                    <p className="text-red-500 text-sm">{errors.avatar}</p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -130,14 +192,16 @@ export default function App() {
                                     type="password"
                                     label="Contraseña"
                                     placeholder="••••••••"
-                                    value={formData.password}
-                                    onValueChange={(value) => setFormData({ ...formData, password: value })}
+                                    value={userData.password || ''}
+                                    onValueChange={(value) => handleInputChange('password', value)}
+                                    errorMessage={errors.password}
                                     startContent={<Lock className="text-gray-400 w-5 h-5" />}
+                                    description="Dejar en blanco para mantener la contraseña actual"
                                     style={{
                                         outline: "none",
                                         boxShadow: "none",
                                         border: "none",
-                                        padding: "0 6px 0 6px",
+                                        padding: "0 12px 0 12px",
                                     }}
                                 />
 
@@ -145,22 +209,26 @@ export default function App() {
                                     type="password"
                                     label="Confirmar Contraseña"
                                     placeholder="••••••••"
-                                    value={formData.confirmPassword}
-                                    onValueChange={(value) => setFormData({ ...formData, confirmPassword: value })}
+                                    value={userData.password_confirmation || ''}
+                                    onValueChange={(value) => handleInputChange('password_confirmation', value)}
+                                    errorMessage={errors.password_confirmation}
                                     startContent={<Lock className="text-gray-400 w-5 h-5" />}
                                     style={{
                                         outline: "none",
                                         boxShadow: "none",
                                         border: "none",
-                                        padding: "0 6px 0 6px",
+                                        padding: "0 12px 0 12px",
                                     }}
                                 />
 
                                 <Select
                                     label="Rol"
                                     placeholder="Seleccione un rol"
-                                    selectedKeys={[formData.role]}
-                                    onSelectionChange={(keys) => setFormData({ ...formData, role: Array.from(keys)[0] })}
+                                    selectedKeys={userData.role ? [userData.role] : []}
+                                    onSelectionChange={(keys) =>
+                                        handleInputChange('role', Array.from(keys)[0])
+                                    }
+                                    errorMessage={errors.role}
                                     startContent={<Shield className="text-gray-400 w-5 h-5" />}
                                 >
                                     <SelectItem key="administrator">Administrador</SelectItem>
@@ -170,20 +238,23 @@ export default function App() {
 
                                 <div className="flex items-center gap-2">
                                     <Switch
-                                        isSelected={formData.status === "active"}
-                                        onValueChange={(isActive) => 
-                                            setFormData ({
-                                                ...formData,
-                                                status: isActive ? "active" : "inactive"
-                                            })
+                                        isSelected={userData.status === "active"}
+                                        onValueChange={(isActive) =>
+                                            handleInputChange('status', isActive ? "active" : "inactive")
                                         }
                                         size="sm"
                                         color="primary"
                                     />
-                                    <span className="text-sm">Estado: {formData.status === "active" ? "Activo" : "Inactivo"}</span>
+                                    <span className="text-sm">
+                                        Estado: {userData.status === "active" ? "Activo" : "Inactivo"}
+                                    </span>
+                                    {errors.status && (
+                                        <p className="text-red-500 text-sm">{errors.status}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
+
                         {/* Botones de Acción */}
                         <div className="flex gap-4 mt-8 justify-end">
                             <Button
@@ -191,7 +262,8 @@ export default function App() {
                                 color="default"
                                 className="px-8 py-3"
                                 startContent={<X className="w-5 h-5" />}
-                                onPress={handleCancel}
+                                onPress={() => window.history.back()}
+                                disabled={isSubmitting}
                             >
                                 Cancelar
                             </Button>
@@ -200,12 +272,13 @@ export default function App() {
                                 color="primary"
                                 className="px-8 py-3"
                                 startContent={<Save className="w-5 h-5" />}
+                                isLoading={isSubmitting}
+                                disabled={isSubmitting}
                             >
-                                Guardar Cambios
+                                {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
                             </Button>
                         </div>
-
-                    </Form>
+                    </form>
                 </div>
             </div>
         </DashboardLayout>

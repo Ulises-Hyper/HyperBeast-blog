@@ -49,6 +49,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/', [UserController::class, 'store'])->name('dashboard.users.store');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('dashboard.users.destroy');
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('dashboard.users.edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('dashboard.users.update');
     });
 });
     

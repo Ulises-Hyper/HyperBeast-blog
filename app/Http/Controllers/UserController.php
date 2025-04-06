@@ -61,13 +61,13 @@ class UserController extends Controller
                 try {
                     // Obtén el archivo
                     $file = $request->file('avatar');
-            
+
                     // Genera un nombre único para el archivo
                     $fileName = time() . '_' . $file->getClientOriginalName();
-            
+
                     // Mueve el archivo a la carpeta public/img
                     $file->move(public_path('img'), $fileName);
-            
+
                     // Guarda la ruta del archivo en la base de datos
                     $validated['avatar'] = '/img/' . $fileName;
                 } catch (\Exception $e) {
@@ -96,17 +96,89 @@ class UserController extends Controller
         }
     }
 
-    public function edit(User $user){
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+
         return Inertia::render('Dashboard/Edit', [
             'user' => $user,
         ]);
     }
 
-    public function destroy($id){
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            // Validación con mensajes personalizados
+            $validated = $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'email' => 'sometimes|email|unique:users,email,' . $user->id,
+                'username' => 'sometimes|string|max:255|unique:users,username,' . $user->id,
+                'password' => 'nullable|min:8|confirmed',
+                'role' => 'sometimes|nullable|exists:roles,name',
+                'status' => 'sometimes|in:active,inactive',
+                'avatar' => 'nullable|image|max:4096'
+            ]);
+
+            // Manejo de avatar: mantener el existente si no se sube uno nuevo
+            if ($request->hasFile('avatar')) {
+                try {
+                    // Obtén el archivo
+                    $file = $request->file('avatar');
+
+                    // Genera un nombre único para el archivo
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+
+                    // Mueve el archivo a la carpeta public/img
+                    $file->move(public_path('img'), $fileName);
+
+                    // Guarda la ruta del archivo en la base de datos
+                    $validated['avatar'] = '/img/' . $fileName;
+                } catch (\Exception $e) {
+                    Log::error('Error al guardar la imagen: ' . $e->getMessage());
+                    // No establecer a null, simplemente no incluir en la actualización
+                    unset($validated['avatar']);
+                }
+            } else {
+                // Quitar del array para no actualizar este campo
+                unset($validated['avatar']);
+            }
+
+            // Actualizar contraseña solo si se proporciona
+            if (!empty($validated['password'])) {
+                $validated['password'] = Hash::make($validated['password']);
+            } else {
+                unset($validated['password']);
+            }
+
+            // Actualizar role_id solo si se proporcionó un rol
+            if (array_key_exists('role', $validated) && !empty($validated['role'])) {
+                $role = Role::where('name', $validated['role'])->first();
+                if ($role) {
+                    $validated['role_id'] = $role->id;
+                }
+                unset($validated['role']);
+            }
+
+            $user->update($validated);
+
+            return redirect()->route('dashboard.users.index')->with('success', 'Usuario actualizado correctamente');
+
+        } catch (\Exception $e) {
+            Log::error('Error al actualizar usuario: ' . $e->getMessage());
+            // Mantener consistencia en el tipo de respuesta (redirección)
+            return redirect()->route('dashboard.users.index')->withInput()->with('error', 'Error al actualizar el usuario');
+        }
+    }
+
+    public function destroy($id)
+    {
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->back()->with('message', 'Usuario eliminado correctamente');    }
+        return redirect()->back()->with('message', 'Usuario eliminado correctamente');
+    }
 
     public function toggleStatus($id)
     {
