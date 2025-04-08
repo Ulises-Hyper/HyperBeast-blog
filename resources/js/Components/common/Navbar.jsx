@@ -75,10 +75,10 @@ function NavbarMenu() {
                   <div className="p-2">
                     <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-700">
                       <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                        Admin Hyper
+                        {auth.user.name}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                        admin@hyperbeast.es
+                        {auth.user.email}
                       </p>
                     </div>
                     <ul className="py-1">
