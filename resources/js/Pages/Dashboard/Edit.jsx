@@ -3,7 +3,6 @@ import { usePage, router } from '@inertiajs/react';
 import { Form, Input, Button, Select, SelectItem, Avatar, Switch, addToast } from "@heroui/react";
 import { User, Mail, Lock, Shield, X, Save } from "lucide-react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { toast } from 'react-toastify';
 
 export default function Edit() {
     const { user: initialUser, errors: serverErrors } = usePage().props;

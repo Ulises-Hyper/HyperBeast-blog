@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
 
 
 Route::get("/", function () {
@@ -51,6 +52,9 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('dashboard.users.edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('dashboard.users.update');
     });
+
+    Route::resource('categories', CategoryController::class)
+    ->names('dashboard.categories');
 });
     
 Route::middleware('auth')->group(function () {

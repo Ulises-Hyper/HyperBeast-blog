@@ -8,7 +8,7 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={20} />, link: "/dashboard" },
     { id: "articles", label: "Articles", icon: <FileText size={20} />, link: "#articles" },
     { id: "users", label: "Users", icon: <Users size={20} />, link: "/dashboard/users" },
-    { id: "categories", label: "Categories", icon: <Tag size={20} />, link: "#categories" },
+    { id: "categories", label: "Categories", icon: <Tag size={20} />, link: "/dashboard/categories" },
     { id: "comments", label: "Comments", icon: <MessageCircle size={20} />, link: "#comments" },
   ];
 
