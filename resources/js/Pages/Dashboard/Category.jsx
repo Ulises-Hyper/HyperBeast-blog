@@ -1,35 +1,31 @@
+import {
+  addToast,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Pagination,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+  useDisclosure
+} from "@heroui/react";
+import { Link, router, useForm } from "@inertiajs/react";
+import { PlusIcon } from "lucide-react";
 import React from "react";
 import DashboardLayout from "../../Layouts/DashboardLayout";
-import { Link, router } from "@inertiajs/react";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Chip,
-  Tooltip,
-  Input,
-  Button,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Pagination,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Switch,
-  Select,
-  SelectItem,
-  useDisclosure,
-  addToast,
-} from "@heroui/react";
-import { FileImage, PlusIcon, ToggleLeft, Edit, Trash2 } from "lucide-react";
-import { useForm } from "@inertiajs/react";
 
 // Iconos personalizados (consistentes con el componente de usuarios)
 export const SearchIcon = (props) => (
@@ -255,61 +251,32 @@ export default function Category({ categories }) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((category, columnKey) => {
-    const cellValue = category[columnKey];
-
     switch (columnKey) {
-      case "id":
-        return (
-          <span className="text-default-500 font-medium">
-            {category.id}
-          </span>
-        );
-      case "name":
-        return (
-          <span className="font-medium text-default-900">
-            {cellValue}
-          </span>
-        );
-      case "slug":
-        return (
-          <span className="text-sm text-default-500">
-            {cellValue}
-          </span>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[category.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue === "active" ? "Activo" : "Inactivo"}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex items-center justify-center gap-2">
-            <Tooltip content="Editar categoría">
-              <Link
-                href={route("dashboard.categories.show", category.id)}
-                className="text-lg text-default-400 cursor-pointer active:opacity-50 hover:text-primary"
-              >
-                <EditIcon size={18} />
-              </Link>
-            </Tooltip>
-            <Tooltip color="danger" content="Eliminar usuario">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50"
-                onClick={() => handleDelete(category.id)}>
-                <DeleteIcon />
-              </span>
-            </Tooltip>
-          </div>
-        );
-      default:
-        return cellValue;
+        case "actions":
+            return (
+                <div className="relative flex items-center justify-center gap-2">
+                    <Tooltip content="Editar categoría">
+                        <Link
+                            href={route("dashboard.categories.edit", category.id)}
+                            className="text-lg text-default-400 cursor-pointer active:opacity-50 hover:text-primary"
+                        >
+                            <EditIcon size={18} />
+                        </Link>
+                    </Tooltip>
+                    <Tooltip color="danger" content="Eliminar categoría">
+                        <span
+                            className="text-lg text-danger cursor-pointer active:opacity-50"
+                            onClick={() => handleDelete(category.id)}
+                        >
+                            <DeleteIcon />
+                        </span>
+                    </Tooltip>
+                </div>
+            );
+        default:
+            return category[columnKey];
     }
-  }, []);
+}, []);
 
   const onRowsPerPageChange = React.useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
@@ -359,18 +326,24 @@ export default function Category({ categories }) {
     });
   };
 
-  const handleDelete = () => {
-    if (!selectedCategory) return;
+  const handleDelete = (id) => {
+    if (!id) {
+      console.error("ID no válido:", id);
+      return;
+    }
 
-    router.delete(route("dashboard.categories.destroy", selectedCategory.id), {
+    if (!window.confirm("¿Seguro que quieres eliminar esta categoria?")) return;
+
+
+    console.log("Eliminando categoría con ID:", id);
+
+    router.delete(`/dashboard/categories/${id}`, {
       onSuccess: () => {
         addToast({
           title: "Categoría eliminada",
           description: "La categoría ha sido eliminada exitosamente",
           color: "success",
         });
-        onOpenChange(false);
-        setSelectedCategory(null);
       },
       onError: () => {
         addToast({
