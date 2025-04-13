@@ -1,6 +1,7 @@
 import {
   addToast,
   Button,
+  Chip,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -167,6 +168,7 @@ const ChevronDownIcon = ({ strokeWidth = 1.5, ...props }) => (
 
 export const columns = [
   { name: "ID", uid: "id", sortable: true },
+  { name: "IMAGEN", uid: "image" },
   { name: "NOMBRE", uid: "name", sortable: true },
   { name: "SLUG", uid: "slug" },
   { name: "ESTADO", uid: "status", sortable: true },
@@ -252,31 +254,45 @@ export default function Category({ categories }) {
 
   const renderCell = React.useCallback((category, columnKey) => {
     switch (columnKey) {
-        case "actions":
-            return (
-                <div className="relative flex items-center justify-center gap-2">
-                    <Tooltip content="Editar categoría">
-                        <Link
-                            href={route("dashboard.categories.edit", category.id)}
-                            className="text-lg text-default-400 cursor-pointer active:opacity-50 hover:text-primary"
-                        >
-                            <EditIcon size={18} />
-                        </Link>
-                    </Tooltip>
-                    <Tooltip color="danger" content="Eliminar categoría">
-                        <span
-                            className="text-lg text-danger cursor-pointer active:opacity-50"
-                            onClick={() => handleDelete(category.id)}
-                        >
-                            <DeleteIcon />
-                        </span>
-                    </Tooltip>
-                </div>
-            );
-        default:
-            return category[columnKey];
+      case "image":
+        return (
+          <img
+            src={category.image}
+            alt={category.name}
+            className="w-12 h-12 object-cover rounded-full"
+          />
+        );
+      case "actions":
+        return (
+          <div className="relative flex items-center justify-center gap-2">
+            <Tooltip content="Editar categoría">
+              <Link
+                href={route("dashboard.categories.edit", category.id)}
+                className="text-lg text-default-400 cursor-pointer active:opacity-50 hover:text-primary"
+              >
+                <EditIcon size={18} />
+              </Link>
+            </Tooltip>
+            <Tooltip color="danger" content="Eliminar categoría">
+              <span
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+                onClick={() => handleDelete(category.id)}
+              >
+                <DeleteIcon />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      case "status":
+        return (
+          <Chip className="capitalize" color={statusColorMap[category.status]} size="sm" variant="flat">
+            {category[columnKey]}
+          </Chip>
+        );
+      default:
+        return category[columnKey];
     }
-}, []);
+  }, []);
 
   const onRowsPerPageChange = React.useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
@@ -376,7 +392,7 @@ export default function Category({ categories }) {
         />
         <div className="flex gap-3">
           <Dropdown>
-            <DropdownTrigger className="hidden sm:flex">
+            <DropdownTrigger className="hidden sm:flex z-0">
               <Button
                 endContent={<ChevronDownIcon className="text-small" />}
                 variant="faded"
@@ -400,7 +416,7 @@ export default function Category({ categories }) {
             </DropdownMenu>
           </Dropdown>
           <Dropdown>
-            <DropdownTrigger className="hidden sm:flex">
+            <DropdownTrigger className="hidden sm:flex z-0">
               <Button
                 endContent={<ChevronDownIcon className="text-small" />}
                 variant="faded"
@@ -546,6 +562,12 @@ export default function Category({ categories }) {
                     errorMessage={form.errors.name}
                     isRequired
                     variant="bordered"
+                    style={{
+                      outline: "none",
+                      boxShadow: "none",
+                      border: "none",
+                      padding: "0 12px 0 0",
+                    }}
                   />
 
                   <Input
@@ -554,7 +576,14 @@ export default function Category({ categories }) {
                     value={selectedCategory?.slug || form.data.slug}
                     onValueChange={(value) => form.setData('slug', value)}
                     errorMessage={form.errors.slug}
+                    isRequired
                     variant="bordered"
+                    style={{
+                      outline: "none",
+                      boxShadow: "none",
+                      border: "none",
+                      padding: "0 12px 0 0",
+                    }}
                   />
 
                   <Input
@@ -565,6 +594,12 @@ export default function Category({ categories }) {
                     errorMessage={form.errors.description}
                     variant="bordered"
                     className="md:col-span-2"
+                    style={{
+                      outline: "none",
+                      boxShadow: "none",
+                      border: "none",
+                      padding: "0 12px 0 0",
+                    }}
                   />
 
                   <Input
