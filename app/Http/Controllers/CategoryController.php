@@ -19,6 +19,14 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function edit ($id){
+        $category = Category::findOrFail($id);
+
+        return Inertia::render('Dashboard/EditCategory',[
+            'category' => $category,
+        ]);
+    }
+
 
     public function store(Request $request)
     {
