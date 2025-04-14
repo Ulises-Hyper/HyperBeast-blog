@@ -27,6 +27,40 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $category = Category::findOrFail($id);
+
+            $data = $request->validate([
+                'name' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'description' => 'nullable|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'status' => 'required|in:active,inactive',
+            ]);
+
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                $file = $request->file('image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+            
+                $file->move(public_path('images/categories'), $filename);
+                $data['image'] = '/images/categories/' . $filename;
+            }
+
+            $category->update($data);
+
+            return redirect()->route('dashboard.categories.index')->with('success', 'Category updated successfully.');
+        } catch (\Throwable $e) {
+            Log::error('Error updating category', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->route('dashboard.categories.index')->with('error', 'Failed to update category.');
+        }
+    }
+
 
     public function store(Request $request)
     {
