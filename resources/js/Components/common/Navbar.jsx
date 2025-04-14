@@ -63,8 +63,8 @@ function NavbarMenu() {
               >
                 <img
                   className="w-8 h-8 rounded-full object-cover ring-2 ring-white dark:ring-gray-600"
-                  src="https://picsum.photos/80"
-                  alt="Admin Hyper"
+                  src={auth.user.avatar}
+                  alt={auth.user.username || "Usuario"}
                 />
                 <ChevronDown className="w-4 h-4 text-gray-300" />
               </button>
@@ -74,7 +74,7 @@ function NavbarMenu() {
                   <div className="p-2">
                     <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-700">
                       <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                        {auth.user.name}
+                        {auth.user.username}
                       </p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                         {auth.user.email}
@@ -156,8 +156,8 @@ function NavbarMenu() {
               className="text-white focus:outline-none"
             >
               <img
-                src="/img/525556c2c672b57db3138e12c1b5d44b.jpg"
-                alt="Usuario"
+                src={auth.user.avatar || "/img/default-avatar.jpg"} // Imagen dinámica o un avatar por defecto
+                alt={auth.user.username || "Usuario"}
                 className="w-8 h-8 rounded-full"
               />
             </button>
