@@ -1,13 +1,12 @@
-import React, { useState } from "react";
 import {
+  Link,
   Navbar,
   NavbarContent,
   NavbarItem,
-  Link,
 } from "@heroui/react";
-import { Menu, X, ChevronDown, User, LogOut, LayoutDashboard } from "lucide-react";
-import { usePage } from "@inertiajs/react";
-import { router } from '@inertiajs/react'
+import { router, usePage } from "@inertiajs/react";
+import { ChevronDown, LayoutDashboard, LogOut, Menu, User, X } from "lucide-react";
+import { useState } from "react";
 
 export const HyperLogo = () => {
   return (

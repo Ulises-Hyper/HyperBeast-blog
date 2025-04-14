@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Bell, ChevronDown, User, LogOut, LayoutDashboard } from 'lucide-react';
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import "../common/SearchBar";
 import SearchBar from "../common/SearchBar";
 
-function DashboardHeader({ user }) {
+function DashboardHeader() {
+    const { auth } = usePage().props;
+    const user = auth.user;
+
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 

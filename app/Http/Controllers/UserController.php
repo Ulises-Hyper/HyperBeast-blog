@@ -29,12 +29,8 @@ class UserController extends Controller
             ];
         });
 
-        // Pasar usuarios y el usuario autenticado
-        $user = Auth::user();
-
         return Inertia::render('Dashboard/Users', [
             'users' => $users,
-            'user' => $user,
         ]);
     }
 
