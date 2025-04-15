@@ -1,80 +1,150 @@
-import React from "react";
-import { User, Mail, MessageCircle } from "lucide-react"; // Importando los íconos de Lucide React
+import { Button, Form, Input, Textarea, addToast } from "@heroui/react";
+import { Mail, MessageCircle, User } from "lucide-react";
+import { useState } from "react";
 
-function FeedbackForm() {
+function FeedbackForm({ user }) {
+    const [formData, setFormData] = useState({
+        username: user?.username || "",
+        email: user?.email || "",
+        message: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            // Crear un objeto FormData
+            const formDataToSend = new FormData();
+            formDataToSend.append('username', formData.username); // Usar el valor del estado
+            formDataToSend.append('email', formData.email);       // Usar el valor del estado
+            formDataToSend.append('message', formData.message);
+
+            const response = await fetch('/feedback', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Token CSRF
+                },
+                body: formDataToSend, // Enviar como FormData
+            });
+
+            if (response.ok) {
+                console.log('Formulario enviado correctamente');
+                addToast({
+                    title: "Formulario Enviado",
+                    description: "Tu feedback ha sido enviado correctamente.",
+                    color: "success"
+                });
+                setFormData({
+                    username: user?.username || "",
+                    email: user?.email || "",
+                    message: "",
+                });
+            } else {
+                console.error('Error al enviar el formulario:', response.statusText);
+                addToast({
+                    title: "Error al enviar",
+                    description: "Hubo un error al enviar tu feedback. Por favor, inténtalo de nuevo.",
+                    color: "danger"
+                });
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            addToast({
+                title: "Error al enviar",
+                description: "Hubo un error al enviar tu feedback. Por favor, inténtalo de nuevo.",
+                color: "danger"
+            });
+        }
+    };
+
     return (
-        <div className="bg-gray-100 min-h-screen w-full flex items-center justify-center">
+        <div className="bg-gray-100 mt-8 mb-8 w-full flex justify-center">
             <div className="bg-white w-full max-w-2xl p-8 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Envía tu Feedback</h2>
                 <p className="text-gray-600 mb-6 text-lg">
-                    Tu opinión es muy importante para nosotros. Utiliza el formulario para compartir tus comentarios, sugerencias o reportar cualquier problema que hayas encontrado.
+                    Tu opinión es muy importante para nosotros. {!user && "Por favor completa el formulario para enviar tus comentarios."}
                 </p>
-                <form className="flex flex-col gap-6">
-                    {/* Nombre de usuario */}
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="username"
-                            className="font-bold text-gray-700 flex items-center gap-2"
-                        >
-                            <User className="h-5 w-5 text-gray-700" />
-                            Usuario
-                        </label>
-                        <input
-                            id="username"
-                            placeholder="Ej: BGreen"
-                            required
-                            type="text"
-                            className="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            aria-label="Nombre de usuario"
-                        />
-                    </div>
+                <Form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                    {!user && (
+                        <>
+                            <div className="flex flex-col w-full">
+                                <Input
+                                    name="username"
+                                    placeholder="Ej: BGreen"
+                                    label="Nombre de usuario"
+                                    icon={<User className="text-gray-500" />}
+                                    type="text"
+                                    aria-label="Nombre de usuario"
+                                    required
+                                    style={{
+                                        outline: "none",
+                                        boxShadow: "none",
+                                        border: "none",
+                                        padding: "0 12px 0 0",
+                                    }}
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    {/* Correo electrónico */}
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="email"
-                            className="font-bold text-gray-700 flex items-center gap-2"
-                        >
-                            <Mail className="h-5 w-5 text-gray-700" />
-                            Correo Electrónico
-                        </label>
-                        <input
-                            id="email"
-                            placeholder="Ej: bgreen@hyperbeast.es"
-                            required
-                            type="email"
-                            className="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            aria-label="Correo electrónico"
-                        />
-                    </div>
+                            <div className="flex flex-col w-full">
+                                <Input
+                                    name="email"
+                                    label="Correo electrónico"
+                                    placeholder="Ej: bgreen@hyperbeast.es"
+                                    type="email"
+                                    aria-label="Correo electrónico"
+                                    icon={<Mail className="text-gray-500" />}
+                                    required
+                                    style={{
+                                        outline: "none",
+                                        boxShadow: "none",
+                                        border: "none",
+                                        padding: "0 12px 0 0",
+                                    }}
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        </>
+                    )}
 
-                    {/* Mensaje */}
-                    <div className="flex flex-col">
-                        <label
-                            htmlFor="message"
-                            className="font-bold text-gray-700 flex items-center gap-2"
-                        >
-                            <MessageCircle className="h-5 w-5 text-gray-700" />
-                            Mensaje
-                        </label>
-                        <textarea
-                            id="message"
+                    <div className="flex flex-col w-full">
+                        <Textarea
+                            name="message"
+                            label="Mensaje"
+                            icon={<MessageCircle className="text-gray-500" />}
                             placeholder="Escribe tu mensaje aquí..."
-                            required
-                            rows={5}
-                            className="mt-2 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            rows={7}
                             aria-label="Mensaje de feedback"
+                            required
+                            style={{
+                                outline: "none",
+                                boxShadow: "none",
+                                border: "none",
+                                padding: "0 12px 0 0",
+                            }}
+                            value={formData.message}
+                            onChange={handleChange}
                         />
                     </div>
 
-                    {/* Botón de envío */}
-                    <button
+                    <Button
                         type="submit"
                         className="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-300 transition-all"
                     >
                         Enviar Feedback
-                    </button>
-                </form>
+                    </Button>
+                </Form>
             </div>
         </div>
     );

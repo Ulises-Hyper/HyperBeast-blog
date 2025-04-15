@@ -8,7 +8,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\FeedbackController;
 
 Route::get("/", function () {
     return Inertia::render('Index', [
@@ -32,6 +32,8 @@ Route::get("/feedback", function () {
     return Inertia::render('Feedback');
 });
 
+Route::post('/feedback', [FeedbackController::class, 'store']);
+
 Route::get('/about', function () {
     return Inertia::render('About');
 });
@@ -39,7 +41,6 @@ Route::get('/about', function () {
 Route::get('/userprofile', function () {
     return Inertia::render('Profile');
 });
-
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

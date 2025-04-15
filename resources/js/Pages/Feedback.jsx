@@ -4,7 +4,9 @@ import Footer from "../components/common/Footer";
 import FeedbackHero from "../components/feedback/FeedbackHero";
 import FeedbackForm from "../components/feedback/FeedbackForm";
 
-function Feedback() {
+function Feedback({ auth }) {
+    const user = auth.user;
+
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
             {/* Navbar */}
@@ -15,8 +17,8 @@ function Feedback() {
                 {/* Hero Section */}
                 <FeedbackHero />
 
-                {/* About Me Section */}
-                <FeedbackForm />
+                {/* Feedback Form */}
+                <FeedbackForm user={user} />
             </main>
 
             {/* Footer */}
