@@ -4,10 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use Inertia\Inertia;
 use Exception;
 
 class FeedbackController extends Controller
 {
+
+    public function index() {
+        $feedbacks = Feedback::all();
+
+        return Inertia::render('Dashboard/Feedback', [
+            'feedbacks' => $feedbacks
+        ]);
+    }
+
     public function store(Request $request){
         try {
             $feedback = $request->validate([

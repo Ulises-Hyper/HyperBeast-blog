@@ -56,6 +56,8 @@ Route::prefix('dashboard')->group(function () {
 
     Route::resource('categories', CategoryController::class)
     ->names('dashboard.categories');
+
+    Route::get('/feedback', [FeedbackController::class, 'index']);
 });
     
 Route::middleware('auth')->group(function () {

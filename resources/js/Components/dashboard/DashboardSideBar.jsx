@@ -1,5 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
-import { FileText, LayoutDashboard, Menu, MessageCircle, Tag, Users } from "lucide-react";
+import { FileText, LayoutDashboard, Menu, MessageCircle, Tag, Users,Inbox } from "lucide-react";
 
 function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
   const { url: currentPath } = usePage(); // Obtener la ruta actual
@@ -10,6 +10,7 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
     { id: "users", label: "Users", icon: <Users size={20} />, link: "/dashboard/users" },
     { id: "categories", label: "Categories", icon: <Tag size={20} />, link: "/dashboard/categories" },
     { id: "comments", label: "Comments", icon: <MessageCircle size={20} />, link: "#comments" },
+    { id: "feedback", label: "Feedback", icon: <Inbox size={20} />, link: "/dashboard/feedback" },
   ];
 
   // Determinar si un ítem está activo
