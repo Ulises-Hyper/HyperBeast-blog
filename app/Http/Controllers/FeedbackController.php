@@ -37,4 +37,12 @@ class FeedbackController extends Controller
             return redirect()->back()->with('error', 'Error al enviar el feedback: ' . $e->getMessage());
         }
     }
+
+    public function show($id){
+        $feedback = Feedback::findOrFail($id);
+
+        return Inertia::render('Dashboard/FeedbackShow', [
+            'feedback' => $feedback
+        ]);
+    }
 }

@@ -19,6 +19,7 @@ import {
 import { ChevronDownIcon, SearchIcon, Eye } from "lucide-react";
 import React from "react";
 import DashboardLayout from "../../Layouts/DashboardLayout";
+import { router } from "@inertiajs/react";
 
 export const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -150,6 +151,29 @@ export default function Feedback({ feedbacks }) {
             return sortDescriptor.direction === "descending" ? -cmp : cmp;
         });
     }, [sortDescriptor, items]);
+
+    const handleDelete = (id) => {
+        if (!id) {
+            console.error("ID no válido:", id);
+            return;
+        }
+        console.log("Eliminando feedback con ID:", id);
+        addToast({
+            title: "Feedback eliminado",
+            description: "El feedback ha sido eliminado correctamente.",
+            color: "success",
+        });
+    };
+    const handleShow = (id) => {
+        if (!id) {
+            console.error("ID no válido:", id);
+            return;
+        }
+        console.log("Mostrando feedback con ID:", id);
+
+        router.get(route("dashboard.feedback.show", id));
+    };
+
 
     const renderCell = React.useCallback((feedback, columnKey) => {
         switch (columnKey) {
