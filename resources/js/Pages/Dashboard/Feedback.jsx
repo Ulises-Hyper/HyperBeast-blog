@@ -7,6 +7,11 @@ import {
     DropdownMenu,
     DropdownTrigger,
     Input,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
     Pagination,
     Table,
     TableBody,
@@ -19,7 +24,7 @@ import {
 import { router } from "@inertiajs/react";
 import axios from "axios";
 import { ChevronDownIcon, Eye, SearchIcon } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "../../Layouts/DashboardLayout";
 
 export const columns = [
@@ -112,15 +117,8 @@ export default function Feedback({ feedbacks }) {
     });
     const [page, setPage] = React.useState(1);
     const [feedbacksData, setFeedbacks] = React.useState(feedbacks);
-
-    const fetchFeedbacks = async () => {
-        try {
-            const response = await axios.get("/dashboard/feedback");
-            setFeedbacks(response.data);
-        } catch (error) {
-            console.error("Error al cargar los feedbacks:", error);
-        }
-    };
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedFeedbackId, setSelectedFeedbackId] = useState(null);
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -167,18 +165,32 @@ export default function Feedback({ feedbacks }) {
         });
     }, [sortDescriptor, items]);
 
-    const handleDelete = (id) => {
-        if (!id) {
-            console.error("ID no válido:", id);
-            return;
+    const handleDeleteConfirm = (id) => {
+        try {
+            const response = axios.delete(`/dashboard/feedback/${id}`);
+            console.log('Respuesta del servidor:', response.data);
+
+            // Actualizar la lista de feedbacks después de eliminar
+            setFeedbacks((prevFeedbacks) => prevFeedbacks.filter((feedback) => feedback.id !== id));
+
+            addToast({
+                title: 'Feedback eliminado',
+                description: 'El feedback ha sido eliminado correctamente.',
+                color: 'success',
+            });
+
+            // Cerrar el modal
+            setIsDeleteModalOpen(false);
+        } catch (error) {
+            console.error('Error al eliminar el feedback:', error.response?.data || error.message);
+            addToast({
+                title: 'Error',
+                description: 'No se pudo eliminar el feedback.',
+                color: 'danger',
+            });
         }
-        console.log("Eliminando feedback con ID:", id);
-        addToast({
-            title: "Feedback eliminado",
-            description: "El feedback ha sido eliminado correctamente.",
-            color: "success",
-        });
     };
+
     const handleShow = (id) => {
         if (!id) {
             console.error("ID no válido:", id);
@@ -251,7 +263,10 @@ export default function Feedback({ feedbacks }) {
                         <Tooltip color="danger" content="Eliminar feedback">
                             <span
                                 className="text-lg text-danger cursor-pointer active:opacity-50"
-                                onClick={() => handleDelete(feedback.id)}
+                                onClick={() => {
+                                    setSelectedFeedbackId(feedback.id);
+                                    setIsDeleteModalOpen(true);
+                                }}
                             >
                                 <DeleteIcon />
                             </span>
@@ -422,6 +437,23 @@ export default function Feedback({ feedbacks }) {
                 </Table>
                 {bottomContent}
             </div>
+            {/* Delete Confirmation Modal */}
+            <Modal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+                <ModalContent>
+                    <ModalHeader>Confirmar eliminación</ModalHeader>
+                    <ModalBody>
+                        <p>¿Estás seguro de que deseas eliminar este feedback? Esta acción no se puede deshacer.</p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button variant="bordered" onPress={() => setIsDeleteModalOpen(false)}>
+                            Cancelar
+                        </Button>
+                        <Button color="danger" onPress={() => handleDeleteConfirm(selectedFeedbackId)}>
+                            Eliminar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </DashboardLayout>
     );
 }

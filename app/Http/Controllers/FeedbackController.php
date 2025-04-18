@@ -61,4 +61,11 @@ class FeedbackController extends Controller
             'feedback' => $feedback
         ]);
     }
+
+    public function destroy($id){
+        $feedback = Feedback::findOrFail($id);
+        $feedback->delete();
+
+        return redirect()->back()->with('success', 'Feedback eliminado correctamente!');
+    }
 }

@@ -100,11 +100,6 @@ export default function FeedbackShow({ feedback }) {
         console.log('Estado actualizado:', localFeedback.status);
     }, [localFeedback]);
 
-    const handleDeleteConfirm = () => {
-        console.log('Confirmar eliminación del feedback');
-        // Implement your delete logic here
-        setIsDeleteModalOpen(false);
-    };
 
     const handleStatusUpdate = (newStatus) => {
         console.log(`Cambiando estado a: ${newStatus}`);
@@ -174,17 +169,6 @@ export default function FeedbackShow({ feedback }) {
                                 </Button>
                             </Tooltip>
                         )}
-
-                        <Tooltip content="Eliminar feedback">
-                            <Button
-                                variant="bordered"
-                                color="danger"
-                                startContent={<Trash2 size={18} />}
-                                onPress={() => setIsDeleteModalOpen(true)}
-                            >
-                                Eliminar
-                            </Button>
-                        </Tooltip>
 
                         <Tooltip content="Aprobar feedback">
                             <Button
@@ -277,10 +261,10 @@ export default function FeedbackShow({ feedback }) {
                         <p>¿Estás seguro de que deseas eliminar este feedback? Esta acción no se puede deshacer.</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button variant="bordered" onClickCapture={() => setIsDeleteModalOpen(false)}>
+                        <Button variant="bordered" onPress={() => setIsDeleteModalOpen(false)}>
                             Cancelar
                         </Button>
-                        <Button color="danger" onClickCapture={handleDeleteConfirm}>
+                        <Button color="danger" onPress={() => handleDeleteConfirm(localFeedback.id)}>
                             Eliminar
                         </Button>
                     </ModalFooter>
