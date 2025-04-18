@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Feedback;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 use Exception;
 
 class FeedbackController extends Controller
 {
 
-    public function index() {
+    public function index()
+    {
         $feedbacks = Feedback::all();
 
         return Inertia::render('Dashboard/Feedback', [
@@ -18,7 +20,8 @@ class FeedbackController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
             $feedback = $request->validate([
                 'username' => 'required|string|max:255',
@@ -31,14 +34,27 @@ class FeedbackController extends Controller
                 'email' => $feedback['email'],
                 'message' => $feedback['message'],
             ]);
-            
+
             return redirect()->back()->with('success', 'Feedback enviado correctamente!');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error al enviar el feedback: ' . $e->getMessage());
         }
     }
 
-    public function show($id){
+    public function updateStatus(Request $request, Feedback $feedback)
+    {
+
+        $request->validate([
+            'status' => ['required', Rule::in(['pending', 'in_review', 'approved', 'rejected'])],
+        ]);
+    
+        $feedback->update(['status' => $request->status]);
+
+        return back()->with('success', '¡Estado actualizado correctamente!');
+    }
+
+    public function show($id)
+    {
         $feedback = Feedback::findOrFail($id);
 
         return Inertia::render('Dashboard/FeedbackShow', [

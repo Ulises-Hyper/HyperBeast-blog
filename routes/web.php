@@ -59,6 +59,7 @@ Route::prefix('dashboard')->group(function () {
 
     Route::get('/feedback', [FeedbackController::class, 'index']);
     Route::get('/feedback/{id}', [FeedbackController::class, 'show'])->name('dashboard.feedback.show');
+    Route::put('/feedback/{feedback}/status', [FeedbackController::class, 'updateStatus'])->name('dashboard.feedback.updatestatus');
 });
     
 Route::middleware('auth')->group(function () {

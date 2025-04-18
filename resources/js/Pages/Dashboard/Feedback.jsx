@@ -16,10 +16,11 @@ import {
     TableRow,
     Tooltip,
 } from "@heroui/react";
-import { ChevronDownIcon, SearchIcon, Eye } from "lucide-react";
+import { router } from "@inertiajs/react";
+import axios from "axios";
+import { ChevronDownIcon, Eye, SearchIcon } from "lucide-react";
 import React from "react";
 import DashboardLayout from "../../Layouts/DashboardLayout";
-import { router } from "@inertiajs/react";
 
 export const columns = [
     { name: "ID", uid: "id", sortable: true },
@@ -33,15 +34,15 @@ export const columns = [
 export const statusOptions = [
     { name: "Pendiente", uid: "pending" },
     { name: "En revisión", uid: "in_review" },
-    { name: "Resuelto", uid: "resolved" },
-    { name: "Descartado", uid: "dismissed" },
+    { name: "Aprovada", uid: "approved" },
+    { name: "Descartada", uid: "rejected" },
 ];
 
 const statusColorMap = {
     pending: "warning",
-    in_review: "info",
-    resolved: "success",
-    dismissed: "danger",
+    in_review: "primary",
+    approved: "success",
+    rejected: "danger",
 };
 
 const INITIAL_VISIBLE_COLUMNS = ["id", "username", "email", "message", "status", "actions"];
@@ -95,6 +96,10 @@ export const DeleteIcon = (props) => (
     </svg>
 );
 
+const getStatusName = (uid) => {
+    const status = statusOptions.find((option) => option.uid === uid);
+    return status ? status.name : uid; // Devuelve el nombre o el uid si no se encuentra
+};
 
 export default function Feedback({ feedbacks }) {
     const [filterValue, setFilterValue] = React.useState("");
@@ -106,6 +111,16 @@ export default function Feedback({ feedbacks }) {
         direction: "ascending",
     });
     const [page, setPage] = React.useState(1);
+    const [feedbacksData, setFeedbacks] = React.useState(feedbacks);
+
+    const fetchFeedbacks = async () => {
+        try {
+            const response = await axios.get("/dashboard/feedback");
+            setFeedbacks(response.data);
+        } catch (error) {
+            console.error("Error al cargar los feedbacks:", error);
+        }
+    };
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -115,7 +130,7 @@ export default function Feedback({ feedbacks }) {
     }, [visibleColumns]);
 
     const filteredItems = React.useMemo(() => {
-        let filteredFeedbacks = [...feedbacks];
+        let filteredFeedbacks = [...feedbacksData];
 
         if (hasSearchFilter) {
             filteredFeedbacks = filteredFeedbacks.filter((feedback) =>
@@ -132,7 +147,7 @@ export default function Feedback({ feedbacks }) {
         }
 
         return filteredFeedbacks;
-    }, [feedbacks, filterValue, statusFilter]);
+    }, [feedbacksData, filterValue, statusFilter]);
 
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -174,28 +189,71 @@ export default function Feedback({ feedbacks }) {
         router.get(route("dashboard.feedback.show", id));
     };
 
+    const handleResolve = async (id) => {
+        if (!id) {
+            console.error("ID no válido:", id);
+            return;
+        }
+
+        try {
+            await axios.patch(`/dashboard/feedback/${id}/status`, {
+                status: "in_review",
+            });
+
+            console.log("Estado actualizado correctamente");
+
+            addToast({
+                title: "Feedback actualizado",
+                description: "El estado del feedback ha sido cambiado a 'En revisión'.",
+                color: "success",
+            });
+
+            setFeedbacks((prevFeedbacks) =>
+                prevFeedbacks.map((feedback) =>
+                    feedback.id === id ? { ...feedback, status: "in_review" } : feedback
+                )
+            );
+        } catch (error) {
+            console.error("Error al actualizar el estado:", error.response?.data || error.message);
+
+            addToast({
+                title: "Error",
+                description: "No se pudo actualizar el estado del feedback.",
+                color: "danger",
+            });
+        }
+    };
 
     const renderCell = React.useCallback((feedback, columnKey) => {
         switch (columnKey) {
             case "status":
                 return (
-                    <Chip className="capitalize" color={statusColorMap[feedback.status]} size="sm" variant="flat">
-                        {feedback[columnKey]}
+                    <Chip
+                        className="capitalize"
+                        color={statusColorMap[feedback.status]} // Usa el color mapeado
+                        size="sm"
+                        variant="flat"
+                    >
+                        {getStatusName(feedback.status)} {/* Muestra el nombre legible */}
                     </Chip>
                 );
             case "actions":
                 return (
                     <div className="flex items-center gap-2">
-                        <Tooltip content="Marcar como resuelto">
-                            <span className="text-lg text-blue-500 cursor-pointer active:opacity-50"
-                                onClick={() => handleShow(feedback.id)}>
-                                <Eye size={20}/>
+                        <Tooltip content="Ver feedback">
+                            <span
+                                className="text-lg text-blue-500 cursor-pointer active:opacity-50"
+                                onClick={() => handleShow(feedback.id)}
+                            >
+                                <Eye size={20} />
                             </span>
                         </Tooltip>
                         <Tooltip color="danger" content="Eliminar feedback">
-                            <span className="text-lg text-danger cursor-pointer active:opacity-50"
-                                onClick={() => handleDelete(feedback.id)}>
-                                <DeleteIcon/>
+                            <span
+                                className="text-lg text-danger cursor-pointer active:opacity-50"
+                                onClick={() => handleDelete(feedback.id)}
+                            >
+                                <DeleteIcon />
                             </span>
                         </Tooltip>
                     </div>
@@ -204,21 +262,6 @@ export default function Feedback({ feedbacks }) {
                 return feedback[columnKey];
         }
     }, []);
-
-    const handleResolve = (id) => {
-        if (!id) {
-            console.error("ID no válido:", id);
-            return;
-        }
-
-        console.log("Resolviendo feedback con ID:", id);
-
-        addToast({
-            title: "Feedback resuelto",
-            description: "El feedback ha sido marcado como resuelto.",
-            color: "success",
-        });
-    };
 
     const onRowsPerPageChange = React.useCallback((e) => {
         setRowsPerPage(Number(e.target.value));
@@ -311,7 +354,7 @@ export default function Feedback({ feedbacks }) {
             </div>
             <div className="flex justify-between items-center">
                 <span className="text-black text-small">
-                    Total {feedbacks.length} feedbacks
+                    Total {feedbacksData.length} feedbacks
                 </span>
                 <label className="flex items-center text-black text-small">
                     Filas por página:
@@ -337,7 +380,7 @@ export default function Feedback({ feedbacks }) {
         visibleColumns,
         onSearchChange,
         onRowsPerPageChange,
-        feedbacks.length,
+        feedbacksData.length,
         hasSearchFilter,
     ]);
 
