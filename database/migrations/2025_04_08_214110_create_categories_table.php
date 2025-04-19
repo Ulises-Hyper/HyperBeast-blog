@@ -18,13 +18,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        // Tabla pivote para la relación muchos a muchos con entries
-        Schema::create('category_entry', function (Blueprint $table) {
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('entry_id')->constrained()->onDelete('cascade');
-            $table->primary(['category_id', 'entry_id']);
-        });
     }
 
     public function down()
