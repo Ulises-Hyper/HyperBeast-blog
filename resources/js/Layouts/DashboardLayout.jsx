@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import DashboardSideBar from "../components/dashboard/DashboardSideBar";
-import DashboardHeader from "../components/dashboard/DashboardHeader";
+import DashboardSideBar from "@/Components/dashboard/DashboardSideBar";
+import DashboardHeader from "@/Components/dashboard/DashboardHeader";
 import { Head } from "@inertiajs/react";
 import { User } from "lucide-react";
 
