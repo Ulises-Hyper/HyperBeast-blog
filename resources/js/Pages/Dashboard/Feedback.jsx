@@ -201,41 +201,6 @@ export default function Feedback({ feedbacks }) {
         router.get(route("dashboard.feedback.show", id));
     };
 
-    const handleResolve = async (id) => {
-        if (!id) {
-            console.error("ID no válido:", id);
-            return;
-        }
-
-        try {
-            await axios.patch(`/dashboard/feedback/${id}/status`, {
-                status: "in_review",
-            });
-
-            console.log("Estado actualizado correctamente");
-
-            addToast({
-                title: "Feedback actualizado",
-                description: "El estado del feedback ha sido cambiado a 'En revisión'.",
-                color: "success",
-            });
-
-            setFeedbacks((prevFeedbacks) =>
-                prevFeedbacks.map((feedback) =>
-                    feedback.id === id ? { ...feedback, status: "in_review" } : feedback
-                )
-            );
-        } catch (error) {
-            console.error("Error al actualizar el estado:", error.response?.data || error.message);
-
-            addToast({
-                title: "Error",
-                description: "No se pudo actualizar el estado del feedback.",
-                color: "danger",
-            });
-        }
-    };
-
     const renderCell = React.useCallback((feedback, columnKey) => {
         switch (columnKey) {
             case "status":
@@ -415,7 +380,7 @@ export default function Feedback({ feedbacks }) {
 
     return (
         <DashboardLayout title="Feedback">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 md:px-6 px-4">
                 {topContent}
                 <Table>
                     <TableHeader columns={headerColumns}>

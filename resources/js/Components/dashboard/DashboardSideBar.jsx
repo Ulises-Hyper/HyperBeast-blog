@@ -6,7 +6,7 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={20} />, link: "/dashboard" },
-    { id: "articles", label: "Articles", icon: <FileText size={20} />, link: "#articles" },
+    { id: "posts", label: "Posts", icon: <FileText size={20} />, link: "/dashboard/posts" },
     { id: "users", label: "Users", icon: <Users size={20} />, link: "/dashboard/users" },
     { id: "categories", label: "Categories", icon: <Tag size={20} />, link: "/dashboard/categories" },
     { id: "comments", label: "Comments", icon: <MessageCircle size={20} />, link: "#comments" },

@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Admin\AdminPostController;
 
 Route::get("/", function () {
     return Inertia::render('Index', [
@@ -54,13 +55,18 @@ Route::prefix('dashboard')->group(function () {
         Route::put('/{id}', [UserController::class, 'update'])->name('dashboard.users.update');
     });
 
+    // Rutas de categorías
     Route::resource('categories', CategoryController::class)
     ->names('dashboard.categories');
 
+    // Rutas de feedback
     Route::get('/feedback', [FeedbackController::class, 'index']);
     Route::get('/feedback/{id}', [FeedbackController::class, 'show'])->name('dashboard.feedback.show');
     Route::put('/feedback/{feedback}/status', [FeedbackController::class, 'updateStatus'])->name('dashboard.feedback.updatestatus');
     Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy'])->name('dashboard.feedback.destroy');
+
+    // Rutas de posts
+    Route::resource('posts', AdminPostController::class)->names('dashboard.posts');
 });
     
 Route::middleware('auth')->group(function () {
