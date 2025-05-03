@@ -129,31 +129,30 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
 
       <div
         className={`fixed top-0 left-0 z-40 h-screen bg-gray-900 backdrop-blur-lg border-r border-gray-700 flex flex-col transition-all duration-300 ease-out ${isCollapsed ? "w-20" : "w-64"
-          } ${isMobile && isCollapsed ? "-translate-x-full" : "translate-x-0"}`}
+          } ${isMobile && isCollapsed ? "-translate-x-full" : "translate-x-0"} overflow-hidden`}
       >
-        {/* Encabezado corregido */}
-        <div className={`p-4 border-b border-gray-700 flex items-center ${isCollapsed ? "justify-center" : "justify-between"}`}>
+        {/* Encabezado */}
+        <div
+          className={`p-4 border-b border-gray-700 flex items-center ${isCollapsed ? "justify-center" : "justify-between"
+            }`}
+        >
           {!isCollapsed && (
-            <div className="flex items-center gap-2">
-              <img
-                src="/images/logos/white_logo_transparent_background.png"
-                alt="Hyperbeast"
-              />
-            </div>
+            <img
+              src="/images/logos/white_logo_transparent_background.png"
+              alt="Hyperbeast"
+              className="w-44 h-auto"
+            />
           )}
           <button
             onClick={handleToggleCollapse}
-            className={`p-2 hover:bg-gray-700/50 rounded-lg transition-all ${isCollapsed ? "" : "hover:scale-105"}`}
+            className={`p-2 hover:bg-gray-700/50 rounded-lg transition-all`}
           >
-            <Menu
-              size={22}
-              className={`${isCollapsed ? "text-gray-300 mx-auto" : "text-gray-300"}`}
-            />
+            <Menu size={22} className="text-gray-300" />
           </button>
         </div>
 
-        {/* Menú principal */}
-        <nav className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-700/50 scrollbar-track-transparent">
+        {/* Contenido scrollable */}
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 scrollbar-thin scrollbar-thumb-gray-700/50 scrollbar-track-transparent">
           {menuSections.map((section, idx) => (
             <div key={idx} className="mb-6">
               {!isCollapsed && (
@@ -163,29 +162,27 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
               )}
               <ul className="flex flex-col gap-1 px-2">
                 {section.items.map((item) => (
-                  <li key={item.id}>
+                  <li key={item.id} className="min-w-0">
                     <Tooltip label={item.label}>
                       <Link
                         href={item.link}
-                        className={`group flex w-full items-center p-3 rounded-xl transition-all duration-200 ${isActive(item.link)
-                          ? "bg-gradient-to-r from-blue-600/30 to-blue-400/10 text-blue-400 border-l-4 border-blue-400"
-                          : ` text-gray-300 border-l-4 border-transparent ${!isCollapsed && "hover:bg-gray-700/30"
-                          }`
-                          } ${isCollapsed ? "justify-center" : "justify-between"}`}
+                        className={`group flex w-full items-center p-3 rounded-xl transition-all duration-200 min-w-0 overflow-hidden ${isActive(item.link)
+                            ? "bg-gradient-to-r from-blue-600/30 to-blue-400/10 text-blue-400 border-l-4 border-blue-400"
+                            : `text-gray-300 border-l-4 border-transparent ${!isCollapsed && "hover:bg-gray-700/30"
+                            }`
+                          } ${isCollapsed ? "justify-center px-3" : "justify-start gap-3 px-4"}`}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className={`${isActive(item.link)
-                            ? "text-blue-400"
-                            : "text-gray-400"
-                            } ${!isCollapsed && "group-hover:text-white"}`}>
-                            {item.icon}
+                        <span
+                          className={`shrink-0 ${isActive(item.link) ? "text-blue-400" : "text-gray-400"
+                            } group-hover:text-white`}
+                        >
+                          {item.icon}
+                        </span>
+                        {!isCollapsed && (
+                          <span className="text-sm font-medium truncate">
+                            {item.label}
                           </span>
-                          {!isCollapsed && (
-                            <span className="text-sm font-medium">
-                              {item.label}
-                            </span>
-                          )}
-                        </div>
+                        )}
                       </Link>
                     </Tooltip>
                   </li>
@@ -195,6 +192,7 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
           ))}
         </nav>
       </div>
+
 
       {/* Botón móvil */}
       {isMobile && isCollapsed && (
