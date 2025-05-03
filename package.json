@@ -22,7 +22,7 @@
     },
     "dependencies": {
         "@heroui/react": "^2.7.2",
-        "framer-motion": "^12.4.7",
+        "framer-motion": "^12.5.0",
         "lucide-react": "^0.475.0"
     }
 }
