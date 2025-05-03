@@ -43,7 +43,7 @@ Route::get('/userprofile', function () {
     return Inertia::render('Profile');
 });
 
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     
     // Grupo para usuarios dentro de /dashboard
