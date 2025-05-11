@@ -19,15 +19,21 @@ import {
     TableHeader,
     TableRow,
     Tooltip,
-    useDisclosure
+    useDisclosure,
+    addToast,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalHeader,
+    ModalFooter
 } from "@heroui/react";
 import { Link } from "@inertiajs/react";
 import { PlusIcon } from "lucide-react";
-import React from 'react';
+import React, { useState } from 'react';
 
 export const columns = [
     { name: 'ID', uid: 'id', sortable: true },
-    { name: 'USER ID', uid: 'user_id', sortable: true},
+    { name: 'USER ID', uid: 'user_id', sortable: true },
     { name: 'TITLE', uid: 'title', sortable: true },
     { name: 'SLUG', uid: 'slug', sortable: true },
     { name: 'STATUS', uid: 'status', sortable: true },
@@ -35,7 +41,7 @@ export const columns = [
     { name: 'FEATURED', uid: 'is_featured', sortable: true },
     { name: 'PINNED', uid: 'is_pinned', sortable: true },
     { name: 'VIEWS', uid: 'views_count', sortable: true },
-    { name: 'ACTIONS', uid: 'actions'}
+    { name: 'ACTIONS', uid: 'actions' }
 ];
 
 export const statusOptions = [
@@ -65,6 +71,10 @@ export default function Index({ posts }) {
     const [sortDescriptor, setSortDescriptor] = React.useState({ column: 'id', direction: 'ascending' });
     const [page, setPage] = React.useState(1);
     const { isOpen, onOpen, OnOpenChange } = useDisclosure();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedPostId, setSelectedPostId] = useState(null);
+    const [postsData, setPosts] = React.useState(posts);
+
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -74,11 +84,11 @@ export default function Index({ posts }) {
     }, [visibleColumns]);
 
     const filteredItems = React.useMemo(() => {
-        let filteredPosts = posts;
+        let filteredPosts = [...postsData];
 
         if (hasSearchFilter) {
             filteredPosts = filteredPosts.filter((post) =>
-                (post.title?.toLowerCase().includes(filterValue.toLowerCase()) ||
+            (post.title?.toLowerCase().includes(filterValue.toLowerCase()) ||
                 post.slug?.toLowerCase().includes(filterValue.toLowerCase()))
             );
         }
@@ -90,7 +100,7 @@ export default function Index({ posts }) {
         }
 
         return filteredPosts;
-    }, [posts, filterValue, statusFilter]);
+    }, [postsData, filterValue, statusFilter]);
 
     const pages = Math.ceil(filteredItems.length / 10);
 
@@ -134,7 +144,10 @@ export default function Index({ posts }) {
                         <Tooltip color="danger" content="Eliminar post">
                             <span
                                 className="text-lg text-danger cursor-pointer active:opacity-50"
-                                onClick={() => handleDelete(post.id)}
+                                onClick={() => {
+                                    setSelectedPostId(post.id);
+                                    setIsDeleteModalOpen(true);
+                                }}
                             >
                                 <DeleteIcon />
                             </span>
@@ -257,7 +270,7 @@ export default function Index({ posts }) {
             </div>
             <div className="flex justify-between items-center">
                 <span className="text-black text-sm">
-                    Total {posts.length} artículos
+                    Total {postsData.length} artículos
                 </span>
                 <label className="flex items-center text-black text-sm">
                     Filas por página:
@@ -278,7 +291,7 @@ export default function Index({ posts }) {
                 </label>
             </div>
         </div>
-    ), [filterValue, statusFilter, visibleColumns, onSearchChange, onRowsPerPageChange, posts.length, hasSearchFilter])
+    ), [filterValue, statusFilter, visibleColumns, onSearchChange, onRowsPerPageChange, postsData.length, hasSearchFilter])
 
     const bottomContent = React.useMemo(() => (
         <div className="py-2 px-2 flex justify-center">
@@ -293,6 +306,31 @@ export default function Index({ posts }) {
             />
         </div>
     ), [items.length, page, pages, hasSearchFilter]);
+
+    const handleDeleteConfirm = (id) => {
+        try {
+            const response = axios.delete(`/dashboard/posts/${id}`);
+            console.log('Respuesta del servidor:', response.data);
+
+            setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+
+            addToast({
+                title: 'Feedback eliminado',
+                description: 'El feedback ha sido eliminado correctamente.',
+                color: 'success',
+            });
+
+            // Cerrar el modal
+            setIsDeleteModalOpen(false);
+        } catch (error) {
+            console.error('Error al eliminar el feedback:', error.response?.data || error.message);
+            addToast({
+                title: 'Error',
+                description: 'No se pudo eliminar el feedback.',
+                color: 'danger',
+            });
+        }
+    };
 
     return (
         <DashboardLayout title="Artículos">
@@ -331,6 +369,22 @@ export default function Index({ posts }) {
                     </TableBody>
                 </Table>
             </div>
+            <Modal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+                <ModalContent>
+                    <ModalHeader>Confirmar eliminación</ModalHeader>
+                    <ModalBody>
+                        <p>¿Estás seguro de que deseas eliminar este feedback? Esta acción no se puede deshacer.</p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button variant="bordered" onPress={() => setIsDeleteModalOpen(false)}>
+                            Cancelar
+                        </Button>
+                        <Button color="danger" onPress={() => handleDeleteConfirm(selectedPostId)}>
+                            Eliminar
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </DashboardLayout>
     )
 }

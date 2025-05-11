@@ -16,4 +16,12 @@ class AdminPostController extends Controller
             'posts' => $posts,
         ]);
     }
+
+    public function destroy($id) {
+        
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->back()-with("success", "Post eliminado correctamente");
+    }
 }
