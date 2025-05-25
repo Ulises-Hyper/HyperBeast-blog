@@ -146,6 +146,7 @@ function DashboardSideBar({ isCollapsed, setIsCollapsed }) {
           <button
             onClick={handleToggleCollapse}
             className={`p-2 hover:bg-gray-700/50 rounded-lg transition-all`}
+            aria-label="Sidebar Close/Open"
           >
             <Menu size={22} className="text-gray-300" />
           </button>

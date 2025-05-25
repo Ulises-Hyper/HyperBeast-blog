@@ -27,7 +27,7 @@ import {
     ModalHeader,
     ModalFooter
 } from "@heroui/react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { PlusIcon } from "lucide-react";
 import React, { useState } from 'react';
 
@@ -70,11 +70,9 @@ export default function Index({ posts }) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [sortDescriptor, setSortDescriptor] = React.useState({ column: 'id', direction: 'ascending' });
     const [page, setPage] = React.useState(1);
-    const { isOpen, onOpen, OnOpenChange } = useDisclosure();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedPostId, setSelectedPostId] = useState(null);
     const [postsData, setPosts] = React.useState(posts);
-
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -259,11 +257,11 @@ export default function Index({ posts }) {
                             ))}
                         </DropdownMenu>
                     </Dropdown>
-                    <Button color="primary" onPress={() => {
-                        setSelectedCategory(null)
-                        onOpen();
-                    }}>
-                        <PlusIcon size={16} />
+                    <Button
+                        color="primary"
+                        startContent={<PlusIcon size={16} />}
+                        onPress={() => { router.visit('/dashboard/posts/create') }}
+                    >
                         Crear Post
                     </Button>
                 </div>

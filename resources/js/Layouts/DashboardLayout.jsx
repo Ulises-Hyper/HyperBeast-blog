@@ -4,7 +4,7 @@ import DashboardHeader from "@/Components/dashboard/DashboardHeader";
 import { Head } from "@inertiajs/react";
 import { User } from "lucide-react";
 
-function DashboardLayout({ children, title, user }) {
+function DashboardLayout({ children, title, user, scrollable = true }) {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
@@ -17,16 +17,16 @@ function DashboardLayout({ children, title, user }) {
       />
 
       <div
-        className={`flex-1 flex flex-col bg-gray-100 overflow-y-auto transition-all duration-300 
+        className={`flex-1 flex flex-col bg-gray-100 transition-all duration-300 
           ${isSidebarCollapsed ? "ml-20" : "ml-64"}`}
       >
-        <div className="top-0 z-10">
+        <div className="shrink-0">
           <DashboardHeader user={user ?? { avatar: <User/> }} />
         </div>
 
-        <main className="container mx-auto">
+        <div className={`flex-1 ${scrollable ? "overflow-y-auto" : "overflow-hidden"}`}>
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );
