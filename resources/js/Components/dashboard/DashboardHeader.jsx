@@ -22,7 +22,7 @@ function DashboardHeader() {
     };
 
     return (
-        <header className="dark:bg-gray-800 mb-4 border-b border-gray-200 dark:border-gray-700 h-16">
+        <header className="dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-16">
             <div className="container mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
                 {/* Search Bar */}
                 <div className="flex-1 max-w-2xl">
@@ -31,7 +31,6 @@ function DashboardHeader() {
 
                 {/* Right Section */}
                 <div className="flex items-center gap-4 ml-6">
-                    {/* Notifications */}
                     {/* Notifications */}
                     <div className="relative">
                         <button
