@@ -1,44 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
+import React from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Button, Tabs, Tab, Link, Avatar } from "@heroui/react";
-import { Save, Eye, Upload, Globe, Calendar, Link2 } from "lucide-react";
+import { Button, Tabs, Tab, Link, Avatar, Select, SelectItem, DateInput, Divider } from "@heroui/react";
+import { Save, Eye, Upload, Globe, Calendar, Link2, Clock } from "lucide-react";
 import { DeleteIcon } from "@/Components/icon/DeleteIcon";
+import { parseZonedDateTime } from "@internationalized/date";
 
 export default function Create() {
 
-    // const ejInstance = useRef(null);
-    // const editorRef = useRef(null);
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    // useEffect(() => {
-    //     if (!ejInstance.current) {
-    //         ejInstance.current = new EditorJS({
-    //             holder: editorRef.current,
+    const now = new Date();
+    const dateTimeString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}[${timeZone}]`;
 
-    //             tools: {
-    //                 header: Header,
-    //                 list: List,
-    //             },
-
-    //             placeholder: 'Escribe algo...',
-
-    //             onReady: () => {
-    //                 console.log('Editor.js está listo');
-    //             },
-    //             onChange: async () => {
-    //                 const content = await ejInstance.current.save();
-    //                 console.log('Contenido actualizado:', content);
-    //             },
-    //         });
-    //     }
-
-    //     return () => {
-    //         ejInstance.current?.destroy();
-    //         ejInstance.current = null;
-    //     };
-    // }, []);
+    const defaultValue = parseZonedDateTime(dateTimeString);
 
     return (
         <DashboardLayout scrollable={false} >
@@ -47,44 +21,100 @@ export default function Create() {
                     <div className="flex-1 flex overflow-hidden">
 
                         {/* Main Content */}
-                        <div className="flex-1 flex flex-col overflow-hidden">
+                        <div className="flex-1 flex flex-col overflow-auto">
 
-                            {/* Header */}
-                            <div className="flex justify-between">
-                                <h2 className="text-2xl font-bold">Nuevo Post</h2>
+                            <div className="md:m-8">
+                                {/* Header */}
+                                <div className="flex justify-between">
+                                    <h2 className="text-2xl font-bold">Nuevo Post</h2>
+                                </div>
+
+                                {/* Tabs */}
+                                <div className="mt-4">
+                                    <Tabs aria-label="Options" color="primary" variant="bordered">
+                                        {/* Editor Tab */}
+                                        <Tab
+                                            key="editor"
+                                            title={
+                                                <div className="flex items-center space-x-2">
+                                                    <span>Editor</span>
+                                                </div>
+                                            }
+                                        >
+
+                                            {/* Editor Content Section */}
+                                            <main className="md:mt-6">
+                                                <div className="rounded-lg border p-4 shadow h-64"></div>
+                                                <div className="md:mt-4">
+                                                    <label>Excerpt</label>
+                                                    <textarea className="w-full p-4 rounded-lg border-none h-32 mt-1 shadow" placeholder="Escribe un pequeño resumen de tu publicación"></textarea>
+                                                    <span className="text-sm text-gray-500">Los extractos son resúmenes opcionales elaborados a mano de su contenido.</span>
+                                                </div>
+                                                <div className="md:mt-4">
+                                                    <label>Featured Image</label>
+                                                    <div className="rounded-lg border-2 border-dashed border-gray-300 h-full w-full md:mt-1">
+                                                        <div className="flex flex-col gap-4 justify-center items-center md:m-4">
+                                                            <Upload size={28} />
+                                                            <span className="text-gray-500">Drag and drop an image here, or click to select a file</span>
+                                                            <Button variant="bordered">Select Image</Button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </main>
+                                        </Tab>
+
+                                        {/* Advanced Tab */}
+                                        <Tab
+                                            key="advanced"
+                                            title={
+                                                <div className="flex items-center space-x-2">
+                                                    <span>Advanced</span>
+                                                </div>
+                                            }
+                                        >
+                                            <div className="space-y-6">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="mt-4">
+                                                        <Select label="Status" placeholder="Draft" variant="bordered" value="Draft">
+                                                            <SelectItem>Draft</SelectItem>
+                                                            <SelectItem>Published</SelectItem>
+                                                            <SelectItem>Scheduled</SelectItem>
+                                                        </Select>
+                                                    </div>
+                                                    <div className="mt-4">
+                                                        <DateInput
+                                                            defaultValue={defaultValue}
+                                                            label="Appointment time"
+                                                            variant="bordered"
+                                                            hourCycle={24}
+                                                            timeZone={timeZone}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <Divider />
+                                                <div class="flex justify-between items-center gap-4">
+                                                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                                        <Clock size={16}/>
+                                                        <span>Created: 26/5/2025, 22:14:11</span>
+                                                    </div>
+                                                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                                        <Clock size={16}/>
+                                                        <span>Updated: 26/5/2025, 22:14:11</span>
+                                                    </div>
+                                                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                                        <DeleteIcon size={16}/>
+                                                        <span>Deleted: Never</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Tab>
+                                    </Tabs>
+                                </div>
+
+                                {/* Advanced Content Section */}
+
                             </div>
 
-                            {/* Tabs */}
-                            <div className="mt-4">
-                                <Tabs aria-label="Options" color="primary" variant="bordered">
-                                    <Tab
-                                        key="editor"
-                                        title={
-                                            <div className="flex items-center space-x-2">
-                                                <span>Editor</span>
-                                            </div>
-                                        }
-                                    >
-
-                                        {/* Editor Content Section */}
-                                        <main className="md:mt-6">
-                                            <div className="">
-                                                {/* <div id="editorjs" ref={editorRef}></div> */}
-                                            </div>
-                                        </main>
-                                    </Tab>
-                                    <Tab
-                                        key="advanced"
-                                        title={
-                                            <div className="flex items-center space-x-2">
-                                                <span>Advanced</span>
-                                            </div>
-                                        }
-                                    />
-                                </Tabs>
-                            </div>
-
-                            {/* Advanced Content Section */}
                         </div>
 
                         {/* Post sidebar */}
