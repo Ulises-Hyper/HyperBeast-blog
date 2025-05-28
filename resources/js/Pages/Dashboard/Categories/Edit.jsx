@@ -4,7 +4,7 @@ import { router, usePage } from '@inertiajs/react';
 import { FileImage, Save, Tag, X } from "lucide-react";
 import { useEffect, useState } from 'react';
 
-export default function EditCategory() {
+export default function Edit() {
     const { category: initialCategory, errors: serverErrors } = usePage().props;
     const [categoryData, setCategoryData] = useState(initialCategory);
     const [imgFile, setImgFile] = useState(null);

@@ -13,7 +13,7 @@ class AdminPostController extends Controller
     {
         $posts = Post::latest()->get();
 
-        return Inertia::render('Dashboard/Posts/Index', [
+        return Inertia::render('Dashboard/Posts/Posts', [
             'posts' => $posts,
         ]);
     }

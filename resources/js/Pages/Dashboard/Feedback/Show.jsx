@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Toolt
 import { Head } from '@inertiajs/react';
 import { ArrowLeft, Check, Clock, MessageSquare, Trash2, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import DashboardLayout from "../../Layouts/DashboardLayout";
+import DashboardLayout from "../../../Layouts/DashboardLayout";
 
 export const DeleteIcon = (props) => (
     <svg
@@ -90,7 +90,7 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('es-ES', options);
 };
 
-export default function FeedbackShow({ feedback }) {
+export default function Show({ feedback }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isRespondModalOpen, setIsRespondModalOpen] = useState(false);
     const [responseText, setResponseText] = useState('');

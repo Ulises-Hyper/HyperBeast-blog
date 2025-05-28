@@ -15,7 +15,7 @@ class FeedbackController extends Controller
     {
         $feedbacks = Feedback::all();
 
-        return Inertia::render('Dashboard/Feedback', [
+        return Inertia::render('Dashboard/Feedback/Feedback', [
             'feedbacks' => $feedbacks
         ]);
     }
@@ -57,7 +57,7 @@ class FeedbackController extends Controller
     {
         $feedback = Feedback::findOrFail($id);
 
-        return Inertia::render('Dashboard/FeedbackShow', [
+        return Inertia::render('Dashboard/Feedback/Show', [
             'feedback' => $feedback
         ]);
     }

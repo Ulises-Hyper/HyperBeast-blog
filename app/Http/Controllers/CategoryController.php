@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return Inertia::render('Dashboard/Category', [
+        return Inertia::render('Dashboard/Categories/Category', [
             'categories' => $categories,
         ]);
     }
@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function edit ($id){
         $category = Category::findOrFail($id);
 
-        return Inertia::render('Dashboard/EditCategory',[
+        return Inertia::render('Dashboard/Categories/Edit',[
             'category' => $category,
         ]);
     }

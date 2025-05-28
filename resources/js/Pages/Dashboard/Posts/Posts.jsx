@@ -60,7 +60,7 @@ export const statusColorMap = [
 
 const INITIAL_VISIBLE_COLUMNS = ["id", "user_id", "title", "slug", "status", "published_at", "is_featured", "is_pinned", "views_count", "actions"];
 
-export default function Index({ posts }) {
+export default function Posts({ posts }) {
 
     console.log("Valor de posts: ", posts);
 
