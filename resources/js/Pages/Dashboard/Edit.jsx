@@ -88,7 +88,7 @@ export default function Edit() {
 
     return (
         <DashboardLayout>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center md:px-8 md:py-6">
                 <div className="bg-white rounded-xl shadow-sm p-8 w-full max-w-6xl">
                     <h1 className="text-2xl font-bold mb-8 text-gray-800">Editar Usuario</h1>
                     <form onSubmit={handleSubmit}>

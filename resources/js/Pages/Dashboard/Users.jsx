@@ -574,7 +574,7 @@ function Users({ user, users }) {
 
   return (
     <DashboardLayout title="Usuarios" user={user}>
-      <div className="px-4">
+      <div className="md:px-8 md:py-6">
         <h1 className="text-2xl font-semibold mb-6">Lista de Usuarios</h1>
         <Table
           isHeaderSticky
