@@ -8,7 +8,7 @@ function ArticlesCards() {
                 <div className="relative mb-16">
                     <div className="flex flex-col items-center pt-0 mt-0">
                         <span className="text-blue-400 font-bold mb-2">Mantente Actualizado</span>
-                        <h1 className="text-5xl font-bold text-white">
+                        <h1 className="text-5xl text-center font-bold text-white">
                             Próximas Entradas
                         </h1>
                         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-4"></div>
