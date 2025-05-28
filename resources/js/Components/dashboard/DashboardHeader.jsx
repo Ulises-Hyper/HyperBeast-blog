@@ -91,7 +91,7 @@ function DashboardHeader() {
 
                         {/* Dropdown */}
                         {isUserMenuOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600">
+                            <div className="absolute z-10 right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600">
                                 <div className="p-2">
                                     <div className="px-3 py-2 border-b border-gray-100 dark:border-gray-700">
                                         <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
