@@ -380,7 +380,7 @@ export default function Feedback({ feedbacks }) {
 
     return (
         <DashboardLayout title="Feedback">
-            <div className="flex flex-col gap-4 md:px-6 px-4">
+            <div className="flex flex-col gap-4 md:px-8 md:py-6">
                 {topContent}
                 <Table>
                     <TableHeader columns={headerColumns}>

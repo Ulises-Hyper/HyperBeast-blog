@@ -332,7 +332,7 @@ export default function Index({ posts }) {
 
     return (
         <DashboardLayout title="Artículos">
-            <div className="md:px-6 px-4">
+            <div className="md:px-8 md:py-6">
                 <h1 className="text-2xl font-semibold mb-6">Gestión de Artículos</h1>
                 <Table
                     isHeaderSticky

@@ -496,7 +496,7 @@ export default function Category({ categories }) {
 
   return (
     <DashboardLayout title="Categorías">
-      <div className="px-4">
+      <div className="md:px-8 md:py-6">
         <h1 className="text-2xl font-semibold mb-6">Gestión de Categorías</h1>
         <Table
           isHeaderSticky
