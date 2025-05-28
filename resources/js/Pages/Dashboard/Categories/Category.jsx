@@ -26,9 +26,8 @@ import {
 import { Link, router, useForm } from "@inertiajs/react";
 import { PlusIcon } from "lucide-react";
 import React from "react";
-import DashboardLayout from "../../Layouts/DashboardLayout";
+import DashboardLayout from "@/Layouts/DashboardLayout";
 
-// Iconos personalizados (consistentes con el componente de usuarios)
 export const SearchIcon = (props) => (
   <svg
     aria-hidden="true"

@@ -25,7 +25,7 @@ import { router } from "@inertiajs/react";
 import axios from "axios";
 import { ChevronDownIcon, Eye, SearchIcon } from "lucide-react";
 import React, { useState } from "react";
-import DashboardLayout from "../../Layouts/DashboardLayout";
+import DashboardLayout from "../../../Layouts/DashboardLayout";
 
 export const columns = [
     { name: "ID", uid: "id", sortable: true },

@@ -83,7 +83,7 @@ export default function Edit() {
         if (avatarFile) {
             return URL.createObjectURL(avatarFile);
         }
-        return userData.avatar || "https://i.pravatar.cc/150";
+        return userData.avatar;
     };
 
     return (

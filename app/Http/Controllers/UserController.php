@@ -28,7 +28,7 @@ class UserController extends Controller
             ];
         });
 
-        return Inertia::render('Dashboard/Users', [
+        return Inertia::render('Dashboard/Users/Users', [
             'users' => $users,
         ]);
     }
@@ -95,7 +95,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return Inertia::render('Dashboard/Edit', [
+        return Inertia::render('Dashboard/Users/Edit', [
             'user' => $user,
         ]);
     }
