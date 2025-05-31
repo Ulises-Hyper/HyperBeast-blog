@@ -49,7 +49,7 @@ export default function ArticlesList() {
             </div>
 
             {/* Articles Section */}
-            <div className="container mx-auto px-6 mb-8">
+            <div className="container mx-auto px-6 md:px-10 mb-8">
                 <div className="space-y-8">
 
                     {/* Single Article */}

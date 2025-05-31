@@ -1,10 +1,13 @@
 import React from "react";
 
-function ArticleContent() {
+export default function ArticleContent({ content }) {
+
+    console.log("Content:", content);
+
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-5">
             <div className="max-w-4xl mx-auto">
-                <p className="text-gray-600 text-lg">Las contraseñas son la primera línea de defensa contra el acceso no autorizado a tus cuentas. En este artículo, te mostramos las mejores prácticas para crear y mantener contraseñas seguras.</p>
+                {/* <p className="text-gray-600 text-lg">Las contraseñas son la primera línea de defensa contra el acceso no autorizado a tus cuentas. En este artículo, te mostramos las mejores prácticas para crear y mantener contraseñas seguras.</p>
                 <h2 className="text-3xl mt-5 font-bold">1. Usa contraseñas fuertes</h2>
                 <p className="text-gray-600 text-md mt-2">Una contraseña fuerte debe contener al menos 12 caracteres, incluyendo una combinación de letras mayúsculas, minúsculas, números y símbolos. Evita usar palabras comunes o información personal.</p>
                 <div className="bg-blue-50 border-l-4 border-blue-500 p-6 my-8">
@@ -45,10 +48,84 @@ function ArticleContent() {
                             <span>Guardar artículo</span>
                         </button>
                     </div>
-                </div>
+                </div> */}
+                {content?.blocks?.map?.((block, index) => {
+                    switch (block.type) {
+                        case "header":
+                            const HeaderTag = `h${block.data.level}`;
+                            return <HeaderTag key={index}>{block.data.text}</HeaderTag>;
+
+                        case "paragraph":
+                            return <p key={index}>{block.data.text}</p>;
+
+                        case "list":
+                            if (block.data.style === "unordered") {
+                                return (
+                                    <ul key={index} className="list-disc pl-5">
+                                        {block.data.items.map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
+                                    </ul>
+                                );
+                            } else {
+                                return (
+                                    <ol key={index} className="list-decimal pl-5">
+                                        {block.data.items.map((item, i) => (
+                                            <li key={i}>{item}</li>
+                                        ))}
+                                    </ol>
+                                );
+                            }
+
+                        case "image":
+                            return (
+                                <figure key={index}>
+                                    <img
+                                        src={block.data.file.url}
+                                        alt={block.data.caption || "Imagen"}
+                                        className="rounded-md w-full object-cover"
+                                    />
+                                    {block.data.caption && (
+                                        <figcaption className="text-sm text-center text-gray-500 mt-2">
+                                            {block.data.caption}
+                                        </figcaption>
+                                    )}
+                                </figure>
+                            );
+
+                        case "quote":
+                            return (
+                                <blockquote key={index} className="border-l-4 pl-4 italic text-gray-700 my-4">
+                                    <p>"{block.data.text}"</p>
+                                    {block.data.caption && (
+                                        <footer className="text-sm text-gray-500 mt-1">— {block.data.caption}</footer>
+                                    )}
+                                </blockquote>
+                            );
+
+                        case "code":
+                            return (
+                                <pre key={index} className="bg-gray-800 text-white p-4 rounded-md overflow-auto">
+                                    <code>{block.data.code}</code>
+                                </pre>
+                            );
+
+                        case "delimiter":
+                            return (
+                                <div key={index} className="my-8 text-center text-gray-300">
+                                    •••
+                                </div>
+                            );
+
+                        default:
+                            return (
+                                <p key={index} className="text-red-500">
+                                    Tipo de bloque no soportado: {block.type}
+                                </p>
+                            );
+                    }
+                })}
             </div>
         </div>
     )
 }
-
-export default ArticleContent;

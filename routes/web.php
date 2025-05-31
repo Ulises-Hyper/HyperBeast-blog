@@ -22,7 +22,9 @@ Route::get("/", function () {
 
 Route::post('/newsletter', [NewsletterController::class, 'store']);
 
+// Public Post Side
 Route::get("/blog", [PublicPostController::class, 'index']);
+Route::get('/blog/{username}/{slug}', [PublicPostController::class, 'show']);
 
 Route::get("/article", function () {
     return Inertia::render('Article');
