@@ -3,7 +3,7 @@ import React from "react";
 function ArticlesCards() {
     return (
         <section className="text-white py-12">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 md:px-12 mb-8">
                 {/* Header */}
                 <div className="relative mb-16">
                     <div className="flex flex-col items-center pt-0 mt-0">
