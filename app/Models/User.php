@@ -23,7 +23,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = ['name', 'email', 'username', 'avatar', 'status', 'password', 'role_id'];
+    protected $fillable = ['name', 'email', 'username', 'description', 'avatar', 'status', 'password', 'role_id'];
 
 
     // Scope para filtrar por estado
