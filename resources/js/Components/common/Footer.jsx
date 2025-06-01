@@ -13,13 +13,10 @@ function Footer() {
             <h4 className="text-xl mb-4">Enlaces rápidos</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Inicio</a>
+                <a href="/" className="text-gray-400 hover:text-white">Inicio</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">CTF</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white">Reviews</a>
+                <a href="/blog" className="text-gray-400 hover:text-white">CTF</a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white">Contacto</a>

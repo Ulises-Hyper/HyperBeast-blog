@@ -90,7 +90,7 @@ export default function ArticlesList() {
                                         <div className="flex justify-between items-center gap-3 mt-4">
                                             {/* Leer más */}
                                             <a
-                                                href={`/${post.username}/${post.slug}`}
+                                                href={`/blog/${post.username}/${post.slug}`}
                                                 className="text-blue-600 hover:underline text-sm"
                                             >
                                                 Leer más →
