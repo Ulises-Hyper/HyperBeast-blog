@@ -28,8 +28,7 @@ function NavbarMenu() {
 
   const menuItems = [
     { label: "Inicio", href: "/" },
-    { label: "CTF", href: "/ctf" },
-    { label: "Reviews", href: "#" },
+    { label: "Blog", href: "/blog" },
     { label: "Feedback", href: "/feedback" },
     { label: "Sobre mi", href: "/about" },
   ];
