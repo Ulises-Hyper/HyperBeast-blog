@@ -3,7 +3,9 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Avatar, Button, Textarea } from "@heroui/react";
+import { Link, useForm, usePage, router } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -15,30 +17,102 @@ export default function UpdateProfileInformation({
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             name: user.name,
+            username: user.username,
             email: user.email,
+            description: user.description,
+            avatar: user.avatar
         });
+
+    const [avatarFile, setAvatarFile] = useState(null);
+    const [userData, setUserData] = useState(user);
+
+    useEffect(() => {
+        setUserData(user);
+    }, [user]);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setAvatarFile(file);
+        }
+    };
+
+    const avatarPreview = () => {
+        if (avatarFile) {
+            return URL.createObjectURL(avatarFile);
+        }
+        return userData.avatar;
+    };
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        const formData = new FormData();
+        formData.append('_method', 'patch');
+        formData.append('name', data.name);
+        formData.append('username', data.username);
+        formData.append('email', data.email);
+        formData.append('description', data.description);
+        
+        if (avatarFile) {
+            formData.append('avatar', avatarFile);
+        }
+
+        router.post(route('profile.update'), formData, {
+            forceFormData: true,
+        });
     };
 
     return (
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">
-                    Profile Information
+                    Información Personal
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    Actualiza tu información básica
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div className="flex-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Avatar
+                    </label>
+                    <div className="flex items-center gap-6">
+                        <Avatar
+                            src={avatarPreview()}
+                            className="w-28 h-28 rounded-xl shadow-lg ring-2 ring-gray-700"
+                        />
+                        <div className="flex flex-col gap-3">
+                            <label className="cursor-pointer">
+                                <input
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                />
+                                <Button
+                                    as="span"
+                                    variant="solid"
+                                    startContent={<span role="img" aria-label="Seleccionar archivo">📁</span>}
+                                >
+                                    Cambiar avatar
+                                </Button>
+                            </label>
+                            <span className="text-sm text-gray-400">
+                                {avatarFile ? avatarFile.name : "Ningún archivo seleccionado"}
+                            </span>
+                            {errors.avatar && (
+                                <p className="text-sm text-red-500">{errors.avatar}</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nombre" />
 
                     <TextInput
                         id="name"
@@ -47,10 +121,26 @@ export default function UpdateProfileInformation({
                         onChange={(e) => setData('name', e.target.value)}
                         required
                         isFocused
-                        autoComplete="name"
                     />
 
                     <InputError className="mt-2" message={errors.name} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="username" value="Usuario" />
+
+                    <TextInput
+                        id="username"
+                        name="username"
+                        autoComplete="off"
+                        className="mt-1 block w-full"
+                        value={data.username}
+                        onChange={(e) => setData('username', e.target.value)}
+                        required
+                        isFocused
+                    />
+
+                    <InputError className="mt-2" message={errors.username} />
                 </div>
 
                 <div>
@@ -64,6 +154,28 @@ export default function UpdateProfileInformation({
                         onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
+                    />
+
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="textarea" value="Descripción corta (160 carácteres)" />
+
+                    <Textarea
+                        name="description"
+                        placeholder="Escriba aquí su descripción..."
+                        rows={7}
+                        aria-label="Descripción del usuario"
+                        className="mt-1 bg-white"
+                        style={{
+                            outline: "none",
+                            boxShadow: "none",
+                            border: "none",
+                            padding: "0 12px 0 0",
+                        }}
+                        onChange={(e) => setData('description', e.target.value)}
+                        value={data.description}
                     />
 
                     <InputError className="mt-2" message={errors.email} />
