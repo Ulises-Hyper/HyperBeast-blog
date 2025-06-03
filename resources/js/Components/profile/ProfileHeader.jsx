@@ -1,11 +1,14 @@
 import React from "react";
 import {
     Calendar,
-    Camera,
     Link,
     BadgeCheck
 } from 'lucide-react';
 import { usePage } from "@inertiajs/react";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+
+dayjs.locale("es");
 
 export default function ProfileHeader() {
 
@@ -26,14 +29,14 @@ export default function ProfileHeader() {
                     <div className="flex-1 flex justify-between items-start ml-6">
                         <div className="space-y-4">
                             <div className="space-y-2 flex gap-2">
-                                <h1 className="text-2xl font-semibold text-white">María García Rodríguez</h1>
+                                <h1 className="text-2xl font-semibold text-white">{user.name}</h1>
                                 <BadgeCheck size={18} className="text-blue-500"/>
                             </div>
-                            <span className="text-gray-200 text-lg">@mariagarcia</span>
+                            <span className="text-gray-200 text-lg">@{user.username}</span>
                             <div className="flex gap-4 text-white">
                                 <div className="flex items-center gap-1">
                                     <Calendar size={16} />
-                                    <span className="text-gray-200">Miembro desde 05/10/2024</span>
+                                    <span className="text-gray-200">Miembro desde {dayjs(user.created_at).format('D [de] MMMM YYYY')} </span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Link size={16} />
