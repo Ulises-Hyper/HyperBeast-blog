@@ -1,5 +1,6 @@
 import React from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
+import EditorWrapper from "@/Components/article/editorjs/EditorWrapper";
 import { Button, Tabs, Tab, Link, Avatar, Select, SelectItem, DateInput, Divider } from "@heroui/react";
 import { Save, Eye, Upload, Globe, Calendar, Link2, Clock } from "lucide-react";
 import { DeleteIcon } from "@/Components/icon/DeleteIcon";
@@ -44,7 +45,9 @@ export default function Create() {
 
                                             {/* Editor Content Section */}
                                             <main className="md:mt-6">
-                                                <div className="rounded-lg border p-4 shadow h-64"></div>
+                                                <div className="container">
+                                                    <EditorWrapper/>
+                                                </div>
                                                 <div className="md:mt-4">
                                                     <label>Excerpt</label>
                                                     <textarea className="w-full p-4 rounded-lg border-none h-32 mt-1 shadow" placeholder="Escribe un pequeño resumen de tu publicación"></textarea>
