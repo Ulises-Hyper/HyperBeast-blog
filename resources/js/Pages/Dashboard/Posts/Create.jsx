@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import EditorWrapper from "@/Components/article/editorjs/EditorWrapper";
 import { Button, Tabs, Tab, Link, Avatar, Select, SelectItem, DateInput, Divider } from "@heroui/react";
@@ -7,6 +7,7 @@ import { DeleteIcon } from "@/Components/icon/DeleteIcon";
 import { parseZonedDateTime } from "@internationalized/date";
 
 export default function Create() {
+    const saveFunctionRef = useRef(null);
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -14,6 +15,23 @@ export default function Create() {
     const dateTimeString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}[${timeZone}]`;
 
     const defaultValue = parseZonedDateTime(dateTimeString);
+
+    const handleSaveRegister = (saveFn) => {
+        saveFunctionRef.current = saveFn; 
+    };
+
+    const handleManualSave = async () => {
+        if (!saveFunctionRef.current) return;
+
+        try {
+            const savedData = await saveFunctionRef.current();
+            console.log("Guardado manual: ", savedData);
+
+            // Aquí podrías enviar a una API con fetch o axios
+        } catch (err) {
+            console.error("Error al guardar: ", err);
+        }
+    }
 
     return (
         <DashboardLayout scrollable={false} >
@@ -46,7 +64,7 @@ export default function Create() {
                                             {/* Editor Content Section */}
                                             <main className="md:mt-6">
                                                 <div className="container">
-                                                    <EditorWrapper/>
+                                                    <EditorWrapper onSave={handleSaveRegister}/>
                                                 </div>
                                                 <div className="md:mt-4">
                                                     <label>Excerpt</label>
@@ -127,7 +145,7 @@ export default function Create() {
                                     <Button className="w-full" startContent={<Upload size={16} />} variant="bordered">Publicar</Button>
                                     <Button className="w-full" startContent={<Eye size={16} />} variant="bordered">Avance</Button>
                                 </div>
-                                <Button startContent={<Save size={16} />} className="px-4 py-2 w-full bg-black text-white" variant="bordered">Guardar Borrador</Button>
+                                <Button onPress={handleManualSave} startContent={<Save size={16} />} className="px-4 py-2 w-full bg-black text-white" variant="bordered">Guardar Borrador</Button>
                             </div>
                             <div className="p-4 border-b bg-white">
                                 <h3 className="font-bold mb-3">Configuración de publicaciones</h3>
@@ -223,7 +241,7 @@ export default function Create() {
                         <Button startContent={<Upload size={16} />} variant="bordered">Publicar</Button>
                         <div className="flex gap-2 max-w-full">
                             <Button startContent={<Eye size={16} />} className="w-full" variant="bordered">Preview</Button>
-                            <Button startContent={<Save size={16} />} className="w-full bg-black text-white" variant="bordered">Guardar</Button>
+                            <Button onPress={handleManualSave} startContent={<Save size={16} />} className="w-full bg-black text-white" variant="bordered">Guardar</Button>
                         </div>
                     </footer>
                 </div>

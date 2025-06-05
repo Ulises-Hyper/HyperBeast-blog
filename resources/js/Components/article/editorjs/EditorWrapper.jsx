@@ -4,21 +4,31 @@ import tools from "./tools";
 
 export default function EditorWrapper({ data = null, onReady, onSave }) {
     const editorInstanceRef = useRef(null);
+    const autoSaver = useRef(null);
 
     useEffect(() => {
         const editor = new EditorJS({
             holder: 'editorjs',
             placeholder: "Empieza aquí a escribir...",
             tools: tools,
-            data,
+            data: data || JSON.parse(localStorage.getItem("editor-autosave")) || {},
             autofocus: true,
             onReady: () => {
                 editorInstanceRef.current = editor;
+
+                if(onSave){
+                    onSave(() => editorInstanceRef.current.save());
+                }
+
                 onReady?.();
             },
             onChange: async () => {
-                const savedData = await editor.save();
-                onSave?.(savedData);
+                clearTimeout(autoSaver.current);
+                autoSaver.current = setTimeout(async () => {
+                    const content = await editorInstanceRef.current.save();
+                    console.log("Auto guardado: ", content);
+                    localStorage.setItem("editor-autosave", JSON.stringify(content));
+                }, 1000)
             },
         });
 
