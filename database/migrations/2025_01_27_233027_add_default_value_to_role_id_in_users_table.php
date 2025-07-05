@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('role_id')->constrained(table: 'roles');
             $table->unsignedBigInteger('role_id')->default(1)->change(); // Cambia "1" por el valor predeterminado deseado
         });
     }
