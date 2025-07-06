@@ -12,21 +12,18 @@ export default function PostSettings() {
                         <Globe size={16} />
                         <span className="text-[14px]">Status: Draft</span>
                     </div>
-                    <Button className="text-[14px] font-bold border-none bg-transparent" size="sm">Edit</Button>
                 </div>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Eye size={16} />
                         <span className="text-[14px]">Visibility: Public</span>
                     </div>
-                    <Button className="text-[14px] font-bold border-none bg-transparent" size="sm">Edit</Button>
                 </div>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Calendar size={16} />
                         <span className="text-[14px]">Schedule: Immediate</span>
                     </div>
-                    <Button className="text-[14px] font-bold border-none bg-transparent" size="sm">Edit</Button>
                 </div>
             </div>
         </div>
