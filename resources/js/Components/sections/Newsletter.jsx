@@ -1,21 +1,36 @@
-import React, { useState } from "react";
-import { useForm } from "@inertiajs/react";
+import React, { useEffect } from "react";
+import { useForm, usePage } from "@inertiajs/react";
+import { addToast } from "@heroui/react";
 
 function Newsletter() {
   const { data, setData, post, errors } = useForm({
     email: '',
   });
 
-  const [successMessage, setSuccessMessage] = useState(''); // Estado para el mensaje de éxito
+  // Obtenemos flash para el mensaje de éxito si viene
+  const { flash } = usePage().props || {};
+
+
+  useEffect(() => {
+    if (errors.email) {
+      addToast({
+        title: "Ya estás suscrito",
+        description: errors.email,
+        color: "warning",
+      });
+    }
+    if (flash) {
+      addToast({
+        title: "¡Suscripción exitosa!",
+        description: flash.success,
+        color: "success",
+      });
+    }
+  }, [errors, flash]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    post("/newsletter", {
-      onSuccess: () => {
-        setSuccessMessage('¡Correo añadido correctamente!'); // Mensaje de éxito
-        setData('email', ''); // Limpiar el campo después del éxito
-      }
-    });
+    post("/newsletter");
   }
 
   return (
@@ -32,13 +47,12 @@ function Newsletter() {
               value={data.email}
               onChange={(e) => {
                 setData('email', e.target.value);
-                setSuccessMessage(''); // Limpiar mensaje al escribir
               }}
               type="email"
               name="email"
               placeholder="Tu correo electrónico"
               className="flex-1 px-4 py-3 rounded-lg text-gray-900"
-              required 
+              required
             />
             <button
               type="submit"
@@ -47,13 +61,6 @@ function Newsletter() {
               Suscribirse
             </button>
           </form>
-          {/* Mensaje de error */}
-          {errors.email && <p className="text-red-500 mt-4">{errors.email}</p>}
-          
-          {/* Mensaje de éxito */}
-          {successMessage && (
-            <p className="text-green-500 mt-4">{successMessage}</p>
-          )}
         </div>
       </div>
     </section>

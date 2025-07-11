@@ -9,6 +9,6 @@ class Newsletter extends Model
 {
     use HasFactory;
 
-    protected $table = 'newsletter'; // Asegúrate de que sea 'newsletters'
-    protected $fillable = ['email'];
+    protected $table = 'newsletter';
+    protected $fillable = ['email' , 'user_id'];
 }
