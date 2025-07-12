@@ -64,7 +64,13 @@ export default function EditorTab({ onSaveRegister, postData = {}, setPostData }
         <main className="md:mt-6 space-y-6">
             <div className="space-y-4">
                 {/* Editor */}
-                <EditorWrapper onSave={onSaveRegister} />
+                <EditorWrapper onContentChange={(content, title) => {
+                    setPostData((prev) => ({
+                        ...prev,
+                        content,
+                        title // Actualiza el campo real
+                    }))
+                }} onSave={onSaveRegister} />
 
                 {/* Excerpt */}
                 <div>

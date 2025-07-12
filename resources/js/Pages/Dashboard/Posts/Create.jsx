@@ -5,7 +5,7 @@ import PostSidebar from "@/Components/post/PostSidebar";
 import { Button } from "@heroui/react";
 import { Save, Upload, Eye } from "lucide-react";
 
-export default function Create({ categories }) {
+export default function Create({ categories, user }) {
     const saveFunctionRef = useRef(null);
 
     const [postData, setPostData] = useState({
@@ -35,7 +35,7 @@ export default function Create({ categories }) {
 
             const formData = new FormData();
 
-            for (const key in dataToSend){
+            for (const key in dataToSend) {
                 const value = dataToSend[key];
 
                 formData.append(
@@ -73,8 +73,8 @@ export default function Create({ categories }) {
                                 </div>
 
                                 <div className="mt-4">
-                                    <PostTabs 
-                                        onSaveRegister={handleSaveRegister} 
+                                    <PostTabs
+                                        onSaveRegister={handleSaveRegister}
                                         postData={postData}
                                         setPostData={setPostData}
                                     />
@@ -83,7 +83,12 @@ export default function Create({ categories }) {
                         </div>
 
                         {/* Barra lateral */}
-                        <PostSidebar categories={categories} onSave={handleManualSave} />
+                        <PostSidebar
+                            user={user}
+                            categories={categories}
+                            onSave={handleManualSave}
+                            postData={postData}
+                        />
                     </div>
 
                     {/* Footer */}

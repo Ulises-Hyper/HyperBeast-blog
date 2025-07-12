@@ -7,7 +7,7 @@ import PostCategory from "@/Components/post/PostCategory";
 import PostTag from "@/Components/post/PostTag";
 
 // PostSidebar.jsx
-export default function PostSidebar({ onSave, categories }) {
+export default function PostSidebar({ onSave, categories, user, postData }) {
   return (
     <aside className="w-[280px] flex flex-col border-1 overflow-y-auto bg-gray-50">
       <PostActions onSave={onSave} />
@@ -15,7 +15,7 @@ export default function PostSidebar({ onSave, categories }) {
       {/* <PostStats /> */}
       <PostCategory categories={categories} />
       <PostTag />
-      <PostMetaInfo />
+      <PostMetaInfo user={user} title={postData.title} />
     </aside>
   );
 }

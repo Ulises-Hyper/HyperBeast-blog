@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import EditorJS from "@editorjs/editorjs";
 import tools from "./tools";
 
-export default function EditorWrapper({ data = null, onReady, onSave }) {
+export default function EditorWrapper({ data = null, onReady, onSave, onContentChange }) {
     const editorInstanceRef = useRef(null);
     const autoSaver = useRef(null);
 
@@ -16,7 +16,7 @@ export default function EditorWrapper({ data = null, onReady, onSave }) {
             onReady: () => {
                 editorInstanceRef.current = editor;
 
-                if(onSave){
+                if (onSave) {
                     onSave(() => editorInstanceRef.current.save());
                 }
 
@@ -26,8 +26,17 @@ export default function EditorWrapper({ data = null, onReady, onSave }) {
                 clearTimeout(autoSaver.current);
                 autoSaver.current = setTimeout(async () => {
                     const content = await editorInstanceRef.current.save();
-                    console.log("Auto guardado: ", content);
+
+                    // Guarda en el localStorage
                     localStorage.setItem("editor-autosave", JSON.stringify(content));
+
+                    // Extraer el título del header
+                    const headerBlock = content.blocks.find(b => b.type === "header")
+                    const title = headerBlock?.data?.text || '';
+                
+                    if (onContentChange){
+                        onContentChange(content, title)
+                    }
                 }, 1000)
             },
         });
