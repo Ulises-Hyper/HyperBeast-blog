@@ -4,15 +4,19 @@ import PostTabs from "@/Components/post/PostTabs";
 import PostSidebar from "@/Components/post/PostSidebar";
 import { Button } from "@heroui/react";
 import { Save, Upload, Eye } from "lucide-react";
-import { parseZonedDateTime } from "@internationalized/date"; // ✅ IMPORTACIÓN NECESARIA
+import { parseZonedDateTime } from "@internationalized/date";
 
 
 export default function Create({ categories, user }) {
     const saveFunctionRef = useRef(null);
     const [status, setStatus] = useState("draft");
+    const [tags, setTags] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [scheduleDate, setScheduleDate] = useState(
         parseZonedDateTime("2025-07-15T12:00[UTC]")
     );
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const [postData, setPostData] = useState({
         content: null,
@@ -38,26 +42,46 @@ export default function Create({ categories, user }) {
                 ...postData,
                 content: contentData,
                 status,
-                schedule_date: scheduleDate ? scheduleDate.toString() : null,
+                schedule_date: scheduleDate
+                    ? scheduleDate.toDate().toISOString().slice(0, 19).replace('T', ' ')
+                    : null,
+                tags,
+                categories: [...selectedCategories],
             };
 
             const formData = new FormData();
 
             for (const key in dataToSend) {
-                const value = dataToSend[key];
+                let value = dataToSend[key];
 
-                formData.append(
-                    key,
-                    typeof value === 'object' && !(value instanceof File)
-                        ? JSON.stringify(value)
-                        : value
-                )
+                if (key === 'categories' || key === 'tags') {
+                    formData.append(key, JSON.stringify(value || []));
+                } else if (key === 'schedule_date' && value) {
+                    formData.append(key, scheduleDate.toDate().toISOString().slice(0, 19).replace('T', ' '));
+                } else {
+                    formData.append(
+                        key,
+                        typeof value === 'object' && !(value instanceof File)
+                            ? JSON.stringify(value)
+                            : value
+                    );
+                }
             }
 
-            const response = await fetch('/dashboard/posts/create', {
+            const response = await fetch('/dashboard/posts', {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                },
             });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Errores de validación: ", errorData.errors);
+                throw new Error('Error en la respuesta del servidor');
+            }
 
             const result = await response.json();
             console.log("Post guardado: ", result);
@@ -66,6 +90,7 @@ export default function Create({ categories, user }) {
             console.error("Error al guardar el post: ", err);
         }
     };
+
 
     return (
         <DashboardLayout scrollable={false}>
@@ -100,6 +125,10 @@ export default function Create({ categories, user }) {
                             postData={postData}
                             status={status}
                             scheduleDate={scheduleDate}
+                            tags={tags}
+                            setTags={setTags}
+                            selectedCategories={selectedCategories}
+                            setSelectedCategories={setSelectedCategories}
                         />
                     </div>
 

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 import { Input } from "@heroui/react";
 
-export default function PostsTag() {
-
-    const [tags, setTags] = useState([]);
+export default function PostsTag({ tags, setTags }) {
     const [input, setInput] = useState("");
 
     const addTag = () => {

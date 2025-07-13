@@ -160,7 +160,7 @@ export default function Posts({ posts }) {
                     </Chip>
                 );
             case "published_at":
-                return post.published_at ? post.published_at : <span className="text-black italic">Sin publicar</span>;
+                return post.published_at ? post.published_at : <span className="text-black italic">Sin fecha</span>;
             case "is_featured":
                 return post.is_featured ? <span className="text-green-600 font-semibold">Sí</span> : <span className="text-black">No</span>;
             case "is_pinned":
