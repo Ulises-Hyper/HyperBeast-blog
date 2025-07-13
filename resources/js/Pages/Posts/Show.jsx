@@ -20,7 +20,7 @@ export default function Show() {
             <ArticleHeader avatar={post.user.avatar} title={post.title} publishedAt={post.published_at} username={post.user.username}/>
             <ArticleHero image={post.image}/>
             <ArticleContent content={post.content}/>
-            <AuthorBio avatar={post.user.avatar} name={post.user.name} username={post.user.username} />
+            <AuthorBio avatar={post.user.avatar} name={post.user.name} username={post.user.username} description={post.user.description} created_at={post.user.created_at} />
             <CommentForm />
             <CommentItem />
             <RelatedArticleCard />
