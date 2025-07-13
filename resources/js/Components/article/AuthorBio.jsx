@@ -8,8 +8,9 @@ import {
     User
 } from "lucide-react";
 import { Divider } from "@heroui/react";
+import { getYear } from "date-fns";
 
-export default function AuthorBio({ username, name, avatar }) {
+export default function AuthorBio({ username, name, avatar, description, created_at }) {
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
             <div className="max-w-4xl mx-auto p-8 border rounded-lg">
@@ -28,13 +29,12 @@ export default function AuthorBio({ username, name, avatar }) {
                         </h3>
                         <p className="text-base text-slate-500 mb-4 font-medium">@{username}</p>
                         <p className="text-slate-700 leading-relaxed text-lg font-light">
-                            Especialista en seguridad de la información con más de 8 años de experiencia en pentesting, análisis de
-                            vulnerabilidades y arquitectura de seguridad empresarial.
+                            {description}
                         </p>
                         <div className="flex items-center gap-6 mt-5 text-sm text-slate-600">
                             <div className="flex items-center gap-2 bg-white/60 px-3 py-2 rounded-full border border-slate-200/50">
                                 <Calendar size={16} className="text-blue-600" />
-                                <span className="font-medium">Miembro desde 2020</span>
+                                <span className="font-medium">Miembro desde {getYear(created_at)}</span>
                             </div>
                             <div className="flex items-center gap-2 bg-gradient-to-r from-amber-50 to-yellow-50 px-3 py-2 rounded-full border border-amber-200/50">
                                 <Medal size={16} className="text-amber-600" />

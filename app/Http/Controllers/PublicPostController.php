@@ -55,7 +55,9 @@ class PublicPostController extends Controller
                 'user' => [
                     'username' => $post->user->username,
                     'name' => $post->user->name,
-                    'avatar' => $post->user->avatar
+                    'avatar' => $post->user->avatar,
+                    'description' => $post->user->description,
+                    'created_at' => $post->user->created_at
                 ]
             ]
         ]);
