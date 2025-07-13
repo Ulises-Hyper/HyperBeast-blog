@@ -1,12 +1,28 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import PostTabs from "@/Components/post/PostTabs";
 import PostSidebar from "@/Components/post/PostSidebar";
 import { Button } from "@heroui/react";
 import { Save, Upload, Eye } from "lucide-react";
+import { parseZonedDateTime } from "@internationalized/date"; // ✅ IMPORTACIÓN NECESARIA
 
-export default function Create() {
+
+export default function Create({ categories, user }) {
     const saveFunctionRef = useRef(null);
+    const [status, setStatus] = useState("draft");
+    const [scheduleDate, setScheduleDate] = useState(
+        parseZonedDateTime("2025-07-15T12:00[UTC]")
+    );
+
+    const [postData, setPostData] = useState({
+        content: null,
+        excerpt: '',
+        image: null,
+        image_preview: null,
+        status: 'draft',
+        schedule_date: '',
+        visibility: 'public',
+    })
 
     const handleSaveRegister = (saveFn) => {
         saveFunctionRef.current = saveFn;
@@ -16,11 +32,38 @@ export default function Create() {
         if (!saveFunctionRef.current) return;
 
         try {
-            const savedData = await saveFunctionRef.current();
-            console.log("Guardado manual: ", savedData);
-            // Aquí podrías enviar a una API con fetch o axios
+            const contentData = await saveFunctionRef.current();
+
+            const dataToSend = {
+                ...postData,
+                content: contentData,
+                status,
+                schedule_date: scheduleDate ? scheduleDate.toString() : null,
+            };
+
+            const formData = new FormData();
+
+            for (const key in dataToSend) {
+                const value = dataToSend[key];
+
+                formData.append(
+                    key,
+                    typeof value === 'object' && !(value instanceof File)
+                        ? JSON.stringify(value)
+                        : value
+                )
+            }
+
+            const response = await fetch('/dashboard/posts/create', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            console.log("Post guardado: ", result);
+
         } catch (err) {
-            console.error("Error al guardar: ", err);
+            console.error("Error al guardar el post: ", err);
         }
     };
 
@@ -37,13 +80,27 @@ export default function Create() {
                                 </div>
 
                                 <div className="mt-4">
-                                    <PostTabs onSaveRegister={handleSaveRegister} />
+                                    <PostTabs
+                                        onSaveRegister={handleSaveRegister}
+                                        postData={postData}
+                                        setPostData={setPostData}
+                                        status={status}
+                                        setStatus={setStatus}
+                                        scheduleDate={scheduleDate}
+                                        setScheduleDate={setScheduleDate}
+                                    />
                                 </div>
                             </div>
                         </div>
 
                         {/* Barra lateral */}
-                        <PostSidebar onSave={handleManualSave} />
+                        <PostSidebar
+                            categories={categories}
+                            user={user}
+                            postData={postData}
+                            status={status}
+                            scheduleDate={scheduleDate}
+                        />
                     </div>
 
                     {/* Footer */}

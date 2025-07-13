@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 use Inertia\Inertia;
 
 class AdminPostController extends Controller
@@ -20,7 +21,16 @@ class AdminPostController extends Controller
 
     public function create()
     {
-        return Inertia::render('Dashboard/Posts/Create');
+        $categories = Category::where("status", "active")
+            ->get(['id', 'name', 'slug']);
+        
+        $user = Auth::user()
+            ->first(['id', 'username']);
+
+        return Inertia::render('Dashboard/Posts/Create', [
+            'categories' => $categories,
+            'user' => $user
+        ]);
     }
 
     public function destroy($id)
