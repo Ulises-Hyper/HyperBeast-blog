@@ -4,9 +4,15 @@ import PostTabs from "@/Components/post/PostTabs";
 import PostSidebar from "@/Components/post/PostSidebar";
 import { Button } from "@heroui/react";
 import { Save, Upload, Eye } from "lucide-react";
+import { parseZonedDateTime } from "@internationalized/date"; // ✅ IMPORTACIÓN NECESARIA
+
 
 export default function Create({ categories, user }) {
     const saveFunctionRef = useRef(null);
+    const [status, setStatus] = useState("draft");
+    const [scheduleDate, setScheduleDate] = useState(
+        parseZonedDateTime("2025-07-15T12:00[UTC]")
+    );
 
     const [postData, setPostData] = useState({
         content: null,
@@ -31,6 +37,8 @@ export default function Create({ categories, user }) {
             const dataToSend = {
                 ...postData,
                 content: contentData,
+                status,
+                schedule_date: scheduleDate ? scheduleDate.toString() : null,
             };
 
             const formData = new FormData();
@@ -52,7 +60,6 @@ export default function Create({ categories, user }) {
             });
 
             const result = await response.json();
-
             console.log("Post guardado: ", result);
 
         } catch (err) {
@@ -77,6 +84,10 @@ export default function Create({ categories, user }) {
                                         onSaveRegister={handleSaveRegister}
                                         postData={postData}
                                         setPostData={setPostData}
+                                        status={status}
+                                        setStatus={setStatus}
+                                        scheduleDate={scheduleDate}
+                                        setScheduleDate={setScheduleDate}
                                     />
                                 </div>
                             </div>
@@ -84,10 +95,11 @@ export default function Create({ categories, user }) {
 
                         {/* Barra lateral */}
                         <PostSidebar
-                            user={user}
                             categories={categories}
-                            onSave={handleManualSave}
+                            user={user}
                             postData={postData}
+                            status={status}
+                            scheduleDate={scheduleDate}
                         />
                     </div>
 
