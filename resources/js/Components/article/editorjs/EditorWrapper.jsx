@@ -7,43 +7,64 @@ export default function EditorWrapper({ data = null, onReady, onSave, onContentC
     const autoSaver = useRef(null);
 
     useEffect(() => {
+        let initialData = data || JSON.parse(localStorage.getItem('editor-autosave')) || { blocks: []};
+
+        if (!initialData.blocks.find(b => b.type === "header")){
+            initialData.blocks.unshift({
+                type: "header",
+                data: { text: "Título aquí"}
+            })
+        }
+
         const editor = new EditorJS({
             holder: 'editorjs',
             placeholder: "Empieza aquí a escribir...",
-            tools: tools,
+            tools,
             data: data || JSON.parse(localStorage.getItem("editor-autosave")) || {},
             autofocus: true,
-            onReady: () => {
+            onReady: async () => {
                 editorInstanceRef.current = editor;
 
                 if (onSave) {
-                    onSave(() => editorInstanceRef.current.save());
+                    onSave(async () => {
+                        if (typeof editorInstanceRef.current?.save === 'function') {
+                            return await editorInstanceRef.current.save();
+                        } else {
+                            console.error("EditorJS no está listo todavía");
+                            return null;
+                        }
+                    });
                 }
 
                 onReady?.();
             },
             onChange: async () => {
+                if (typeof editorInstanceRef.current?.save !== 'function') return;
+
                 clearTimeout(autoSaver.current);
                 autoSaver.current = setTimeout(async () => {
-                    const content = await editorInstanceRef.current.save();
+                    try {
+                        const content = await editorInstanceRef.current.save();
+                        localStorage.setItem("editor-autosave", JSON.stringify(content));
 
-                    // Guarda en el localStorage
-                    localStorage.setItem("editor-autosave", JSON.stringify(content));
+                        const headerBlock = content.blocks.find(b => b.type === "header");
+                        const title = headerBlock?.data?.text || '';
 
-                    // Extraer el título del header
-                    const headerBlock = content.blocks.find(b => b.type === "header")
-                    const title = headerBlock?.data?.text || '';
-                
-                    if (onContentChange){
-                        onContentChange(content, title)
+                        onContentChange?.(content, title);
+                        console.log("Título del artículo: ", title);
+                    } catch (err) {
+                        console.error("Error al guardar automáticamente", err);
                     }
-                }, 1000)
+                }, 1000);
             },
         });
 
         return () => {
             editor.isReady
-                .then(() => editor.destroy())
+                .then(() => {
+                    editor.destroy();
+                    editorInstanceRef.current = null;
+                })
                 .catch((e) => console.error("EditorJS cleanup error", e));
         };
     }, []);

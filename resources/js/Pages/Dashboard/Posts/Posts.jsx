@@ -313,18 +313,18 @@ export default function Posts({ posts }) {
             setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
 
             addToast({
-                title: 'Feedback eliminado',
-                description: 'El feedback ha sido eliminado correctamente.',
+                title: 'Post eliminado',
+                description: 'El post ha sido eliminado correctamente.',
                 color: 'success',
             });
 
             // Cerrar el modal
             setIsDeleteModalOpen(false);
         } catch (error) {
-            console.error('Error al eliminar el feedback:', error.response?.data || error.message);
+            console.error('Error al eliminar el post:', error.response?.data || error.message);
             addToast({
                 title: 'Error',
-                description: 'No se pudo eliminar el feedback.',
+                description: 'No se pudo eliminar el post.',
                 color: 'danger',
             });
         }
@@ -371,7 +371,7 @@ export default function Posts({ posts }) {
                 <ModalContent>
                     <ModalHeader>Confirmar eliminación</ModalHeader>
                     <ModalBody>
-                        <p>¿Estás seguro de que deseas eliminar este feedback? Esta acción no se puede deshacer.</p>
+                        <p>¿Estás seguro de que deseas eliminar este post? Esta acción no se puede deshacer.</p>
                     </ModalBody>
                     <ModalFooter>
                         <Button variant="bordered" onPress={() => setIsDeleteModalOpen(false)}>

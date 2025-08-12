@@ -15,6 +15,7 @@ export default function Create({ categories, user }) {
     const [scheduleDate, setScheduleDate] = useState(
         parseZonedDateTime("2025-07-15T12:00[UTC]")
     );
+    const [editorReady, setEditorReady] = useState(false);
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -25,11 +26,11 @@ export default function Create({ categories, user }) {
         image_preview: null,
         status: 'draft',
         schedule_date: '',
-        visibility: 'public',
-    })
+    });
 
     const handleSaveRegister = (saveFn) => {
         saveFunctionRef.current = saveFn;
+        setEditorReady(true);
     };
 
     const handleManualSave = async () => {
@@ -67,6 +68,8 @@ export default function Create({ categories, user }) {
                     );
                 }
             }
+
+            console.log("Form data: ", formData);
 
             const response = await fetch('/dashboard/posts', {
                 method: 'POST',
@@ -146,6 +149,7 @@ export default function Create({ categories, user }) {
                                 startContent={<Save size={16} />}
                                 className="w-full bg-black text-white"
                                 variant="bordered"
+                                disabled={!editorReady}
                             >
                                 Guardar
                             </Button>
